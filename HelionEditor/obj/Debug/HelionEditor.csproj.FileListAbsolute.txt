@@ -1,0 +1,36 @@
+D:\Projects\С#\HelionEditor\HelionEditor\bin\Debug\HelionEditor.exe.config
+D:\Projects\С#\HelionEditor\HelionEditor\bin\Debug\HelionEditor.exe
+D:\Projects\С#\HelionEditor\HelionEditor\bin\Debug\HelionEditor.pdb
+D:\Projects\С#\HelionEditor\HelionEditor\obj\Debug\HelionEditor.csproj.AssemblyReference.cache
+D:\Projects\С#\HelionEditor\HelionEditor\obj\Debug\MainWindow.g.cs
+D:\Projects\С#\HelionEditor\HelionEditor\obj\Debug\App.g.cs
+D:\Projects\С#\HelionEditor\HelionEditor\obj\Debug\HelionEditor_MarkupCompile.cache
+D:\Projects\С#\HelionEditor\HelionEditor\obj\Debug\HelionEditor_MarkupCompile.lref
+D:\Projects\С#\HelionEditor\HelionEditor\obj\Debug\MainWindow.baml
+D:\Projects\С#\HelionEditor\HelionEditor\obj\Debug\HelionEditor.g.resources
+D:\Projects\С#\HelionEditor\HelionEditor\obj\Debug\HelionEditor.Properties.Resources.resources
+D:\Projects\С#\HelionEditor\HelionEditor\obj\Debug\HelionEditor.csproj.GenerateResource.cache
+D:\Projects\С#\HelionEditor\HelionEditor\obj\Debug\HelionEditor.csproj.CoreCompileInputs.cache
+D:\Projects\С#\HelionEditor\HelionEditor\obj\Debug\HelionEditor.exe
+D:\Projects\С#\HelionEditor\HelionEditor\obj\Debug\HelionEditor.pdb
+D:\Projects\С#\HelionEditor\HelionEditor\bin\Debug\Tiles\TX Tileset Grass.png
+D:\Projects\С#\HelionEditor\HelionEditor\bin\Debug\Tiles\TX Tileset Stone Ground.png
+D:\Projects\С#\HelionEditor\HelionEditor\bin\Debug\Tiles\TX Tileset Wall.png
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Debug\Tiles\TX Tileset Grass.png
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Debug\Tiles\TX Tileset Stone Ground.png
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Debug\Tiles\TX Tileset Wall.png
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Debug\HelionEditor.exe.config
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Debug\HelionEditor.exe
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Debug\HelionEditor.pdb
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Debug\HelionEditor.csproj.AssemblyReference.cache
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Debug\MainWindow.g.cs
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Debug\App.g.cs
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Debug\HelionEditor_MarkupCompile.cache
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Debug\HelionEditor_MarkupCompile.lref
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Debug\MainWindow.baml
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Debug\HelionEditor.g.resources
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Debug\HelionEditor.Properties.Resources.resources
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Debug\HelionEditor.csproj.GenerateResource.cache
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Debug\HelionEditor.csproj.CoreCompileInputs.cache
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Debug\HelionEditor.exe
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Debug\HelionEditor.pdb
