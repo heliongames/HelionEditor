@@ -7,7 +7,10 @@
         mc:Ignorable="d"
         Title="Tile Editor" Height="437" Width="765" MinWidth="500" MinHeight="300">
     <Grid Background="#FF232323">
-        <Canvas x:Name="CanvasField" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Margin="221,0,0,0" Cursor="Pen"/>
+        <Border BorderThickness="1" BorderBrush="#383838" Margin="235,30,10,10" Panel.ZIndex="1">
+            <Canvas MinWidth="100" MinHeight="100" Background="#FF323131" Panel.ZIndex="2" Margin="0"/>
+        </Border>
+        <Canvas x:Name="CanvasField" Margin="221,0,0,0" Background="#FF424242"/>
         <Label Content="X:200 Y:147 'empty'" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom" Width="221" Foreground="White" HorizontalContentAlignment="Center"/>
         <TextBox Height="23" TextWrapping="Wrap" Text="24" Canvas.Top="236" Width="23" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="126,0,0,126" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <TextBox Height="23" TextWrapping="Wrap" Text="16" Canvas.Top="236" Width="23" Canvas.Left="92" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="79,0,0,126" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
@@ -31,7 +34,7 @@
         <Image x:Name="ImageSelectedTile" HorizontalAlignment="Left" Height="40" Margin="166,0,0,76" VerticalAlignment="Bottom" Width="40"/>
 
         <DockPanel>
-            <Menu DockPanel.Dock="Top">
+            <Menu DockPanel.Dock="Top" Background="#FFF0F0F0">
                 <MenuItem Header="_File">
                     <MenuItem Header="_New" Cursor="Hand" Click="NewItem" InputGestureText="Ctrl+N">
                         <MenuItem.ToolTip>
@@ -54,6 +57,7 @@
                         </MenuItem.ToolTip>
                     </MenuItem>
                     <Separator />
+                    <Separator />
                     <MenuItem Header="_Exit" Cursor="Hand" Click="Exit" InputGestureText="Ctrl+Q">
                         <MenuItem.ToolTip>
                             <ToolTip>Exit editor.</ToolTip>
@@ -61,32 +65,41 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Edit">
-                    <MenuItem Header="_Paint" Cursor="Hand">
+                    <MenuItem Header="_Paint" Cursor="Hand" InputGestureText="P">
                         <MenuItem.ToolTip>
                             <ToolTip>Paint tool.</ToolTip>
                         </MenuItem.ToolTip>
                     </MenuItem>
-                    <MenuItem Header="_Erase" Cursor="Hand">
+                    <MenuItem Header="_Erase" Cursor="Hand" InputGestureText="E">
                         <MenuItem.ToolTip>
                             <ToolTip>Erase tool.</ToolTip>
                         </MenuItem.ToolTip>
                     </MenuItem>
-                    <MenuItem Header="_Select all" Cursor="Hand">
+                    <MenuItem Header="_Select all" Cursor="Hand" InputGestureText="Ctrl+A">
                         <MenuItem.ToolTip>
                             <ToolTip>Select all field tiles.</ToolTip>
                         </MenuItem.ToolTip>
                     </MenuItem>
-                    <MenuItem Header="_Clear all" Cursor="Hand">
+                    <MenuItem Header="_Clear all" Cursor="Hand" InputGestureText="Ctrl+X">
                         <MenuItem.ToolTip>
                             <ToolTip>Clear all field tiles.</ToolTip>
                         </MenuItem.ToolTip>
                     </MenuItem>
                 </MenuItem>
+                <MenuItem Header="_Help">
+                    <MenuItem Header="_Help" Cursor="Hand" InputGestureText="Ctrl+H">
+                        <MenuItem.ToolTip>
+                            <ToolTip>Display help.</ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                </MenuItem>
             </Menu>
-            <StackPanel></StackPanel>
+            <StackPanel>
+
+            </StackPanel>
         </DockPanel>
 
 
     </Grid>
-    
+
 </Window>

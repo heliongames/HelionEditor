@@ -106,7 +106,9 @@
   <ItemGroup>
     <Resource Include="Resources\crop.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="label_file.png" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Tiles\TX Tileset Grass.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
