@@ -34,3 +34,21 @@ C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Debug\HelionEditor.cspr
 C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Debug\HelionEditor.csproj.CoreCompileInputs.cache
 C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Debug\HelionEditor.exe
 C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Debug\HelionEditor.pdb
+C:\Unity\HelionEditor\HelionEditor\bin\Debug\Tiles\TX Tileset Grass.png
+C:\Unity\HelionEditor\HelionEditor\bin\Debug\Tiles\TX Tileset Stone Ground.png
+C:\Unity\HelionEditor\HelionEditor\bin\Debug\Tiles\TX Tileset Wall.png
+C:\Unity\HelionEditor\HelionEditor\bin\Debug\HelionEditor.exe.config
+C:\Unity\HelionEditor\HelionEditor\bin\Debug\HelionEditor.exe
+C:\Unity\HelionEditor\HelionEditor\bin\Debug\HelionEditor.pdb
+C:\Unity\HelionEditor\HelionEditor\obj\Debug\HelionEditor.csproj.AssemblyReference.cache
+C:\Unity\HelionEditor\HelionEditor\obj\Debug\MainWindow.g.cs
+C:\Unity\HelionEditor\HelionEditor\obj\Debug\App.g.cs
+C:\Unity\HelionEditor\HelionEditor\obj\Debug\HelionEditor_MarkupCompile.cache
+C:\Unity\HelionEditor\HelionEditor\obj\Debug\HelionEditor_MarkupCompile.lref
+C:\Unity\HelionEditor\HelionEditor\obj\Debug\MainWindow.baml
+C:\Unity\HelionEditor\HelionEditor\obj\Debug\HelionEditor.g.resources
+C:\Unity\HelionEditor\HelionEditor\obj\Debug\HelionEditor.Properties.Resources.resources
+C:\Unity\HelionEditor\HelionEditor\obj\Debug\HelionEditor.csproj.GenerateResource.cache
+C:\Unity\HelionEditor\HelionEditor\obj\Debug\HelionEditor.csproj.CoreCompileInputs.cache
+C:\Unity\HelionEditor\HelionEditor\obj\Debug\HelionEditor.exe
+C:\Unity\HelionEditor\HelionEditor\obj\Debug\HelionEditor.pdb
