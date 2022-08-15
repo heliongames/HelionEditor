@@ -39,7 +39,7 @@ namespace HelionEditor
 
         private void NewItem(object sender, RoutedEventArgs e)
         {
-            gameLevel = new GameLevel(32, 32);
+            NewFile();
         }
 
         private void OpenItem(object sender, RoutedEventArgs e)
@@ -58,7 +58,12 @@ namespace HelionEditor
             SaveFileAs();
         }
 
-        private void OpenFile()
+        public static void NewFile()
+        {
+            gameLevel = new GameLevel(32, 32);
+        }
+
+        public static void OpenFile()
         {
             OpenFileDialog filedialog = new OpenFileDialog();
             filedialog.Filter = "csl files (*.csl)|*.csl|All files (*.*)|*.*";
@@ -70,7 +75,7 @@ namespace HelionEditor
             }
         }
 
-        private void SaveFile()
+        public static void SaveFile()
         {
             byte[] data = gameLevel.ToByteArray();
             SaveFileDialog fileDialog = new SaveFileDialog();
@@ -84,7 +89,7 @@ namespace HelionEditor
             }
         }
 
-        private void SaveFileAs()
+        public static void SaveFileAs()
         {
             byte[] data = gameLevel.ToByteArray();
             SaveFileDialog fileDialog = new SaveFileDialog();
@@ -98,7 +103,7 @@ namespace HelionEditor
             }
         }
 
-        public void Exit(object sender, RoutedEventArgs e)
+        public static void Exit(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
@@ -125,7 +130,7 @@ namespace HelionEditor
     {
         public void Execute(object parameter)
         {
-            //new
+            MainWindow.NewFile();
         }
 
         public bool CanExecute(object parameter)
@@ -140,22 +145,12 @@ namespace HelionEditor
     {
         public void Execute(object parameter)
         {
-            OpenFile();
+            MainWindow.OpenFile();
         }
 
         public bool CanExecute(object parameter)
         {
             return true;
-        }
-        private void OpenFile()
-        {
-            OpenFileDialog filedialog = new OpenFileDialog();
-            filedialog.Filter = "csl files (*.csl)|*.csl|All files (*.*)|*.*";
-            if (filedialog.ShowDialog() == true)
-            {
-                MainWindow.filePath = filedialog.FileName;
-                MainWindow.fileName = System.IO.Path.GetFileNameWithoutExtension(MainWindow.filePath);
-            }
         }
 
         public event EventHandler CanExecuteChanged;
@@ -165,26 +160,12 @@ namespace HelionEditor
     {
         public void Execute(object parameter)
         {
-            SaveFileAs();
+            MainWindow.SaveFileAs();
         }
 
         public bool CanExecute(object parameter)
         {
             return true;
-        }
-
-        private void SaveFileAs()
-        {
-            string jsonText = "";
-            SaveFileDialog fileDialog = new SaveFileDialog();
-            fileDialog.Filter = "csl files (*.csl)|*.csl";
-            fileDialog.DefaultExt = ".csl";
-            fileDialog.FileName = MainWindow.fileName + "_copy";
-            if (fileDialog.ShowDialog() == true)
-            {
-                File.WriteAllText(fileDialog.FileName, jsonText);
-                MainWindow.fileName = System.IO.Path.GetFileNameWithoutExtension(fileDialog.FileName);
-            }
         }
 
         public event EventHandler CanExecuteChanged;
@@ -194,26 +175,12 @@ namespace HelionEditor
     {
         public void Execute(object parameter)
         {
-            SaveFile();
+            MainWindow.SaveFile();
         }
 
         public bool CanExecute(object parameter)
         {
             return true;
-        }
-
-        private void SaveFile()
-        {
-            string jsonText = "";
-            SaveFileDialog fileDialog = new SaveFileDialog();
-            fileDialog.Filter = "csl files (*.csl)|*.csl";
-            fileDialog.DefaultExt = ".csl";
-            fileDialog.FileName = MainWindow.fileName;
-            if (fileDialog.ShowDialog() == true)
-            {
-                File.WriteAllText(fileDialog.FileName, jsonText);
-                MainWindow.fileName = System.IO.Path.GetFileNameWithoutExtension(fileDialog.FileName);
-            }
         }
 
         public event EventHandler CanExecuteChanged;
