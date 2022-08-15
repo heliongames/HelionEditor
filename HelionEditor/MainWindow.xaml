@@ -80,9 +80,9 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Tools">
-                    <MenuItem Header="_Paint" Cursor="Hand" InputGestureText="P">
+                    <MenuItem Header="_Brush" Cursor="Hand" InputGestureText="B">
                         <MenuItem.ToolTip>
-                            <ToolTip>Paint tool.</ToolTip>
+                            <ToolTip>Paint brush tool.</ToolTip>
                         </MenuItem.ToolTip>
                         <MenuItem.Icon>
                             <Image Source="brush.png"/>
@@ -90,7 +90,7 @@
                     </MenuItem>
                     <MenuItem Header="_Erase" Cursor="Hand" InputGestureText="E">
                         <MenuItem.ToolTip>
-                            <ToolTip>Erase tool.</ToolTip>
+                            <ToolTip>Eraser tool.</ToolTip>
                         </MenuItem.ToolTip>
                         <MenuItem.Icon>
                             <Image Source="ers.png"/>
