@@ -51,10 +51,12 @@ namespace HelionEditor
         {
             SaveFile();
         }
+
         private void SaveAs(object sender, RoutedEventArgs e)
         {
             SaveFileAs();
         }
+
         private void OpenFile()
         {
             OpenFileDialog filedialog = new OpenFileDialog();

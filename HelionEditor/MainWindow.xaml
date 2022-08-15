@@ -70,9 +70,9 @@
                             <Image Source="delete.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_Preferense" Cursor="Hand" InputGestureText="Ctrl+P">
+                    <MenuItem Header="_Preferences" Cursor="Hand" InputGestureText="Ctrl+P">
                         <MenuItem.ToolTip>
-                            <ToolTip>Clear all field tiles.</ToolTip>
+                            <ToolTip>Editor preferences.</ToolTip>
                         </MenuItem.ToolTip>
                         <MenuItem.Icon>
                             <Image Source="pref.png"/>
