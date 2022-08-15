@@ -122,7 +122,36 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="schichten.png" />
+    <Resource Include="logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="new-document.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="save.png" />
+    <Resource Include="saveas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="delete.png" />
+    <Resource Include="select.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pref.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="brush.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ers.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="help.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

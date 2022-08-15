@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HelionEditor"
         mc:Ignorable="d"
-        Title="HGL Editor" Height="437" Width="765" MinWidth="500" MinHeight="300" Icon="schichten.png">
+        Title="HGL Editor" Height="437" Width="765" MinWidth="500" MinHeight="300" Icon="logo.png">
     <Grid Background="#FF232323">
         <DockPanel>
             <Menu DockPanel.Dock="Top" Background="#FFF0F0F0">
@@ -14,21 +14,33 @@
                         <MenuItem.ToolTip>
                             <ToolTip>New level.</ToolTip>
                         </MenuItem.ToolTip>
+                        <MenuItem.Icon>
+                            <Image Source="new-document.png"/>
+                        </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_Open" Cursor="Hand" Click="OpenItem" InputGestureText="Ctrl+O">
                         <MenuItem.ToolTip>
                             <ToolTip>Open a file.</ToolTip>
                         </MenuItem.ToolTip>
+                        <MenuItem.Icon>
+                            <Image Source="open.png"/>
+                        </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_Save" Cursor="Hand" Click="SaveItem" InputGestureText="Ctrl+S">
                         <MenuItem.ToolTip>
                             <ToolTip>Save level.</ToolTip>
                         </MenuItem.ToolTip>
+                        <MenuItem.Icon>
+                            <Image Source="save.png"/>
+                        </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_Save as..." Cursor="Hand" Click="SaveAs" InputGestureText="Ctrl+Shift+S">
                         <MenuItem.ToolTip>
                             <ToolTip>Save level as.</ToolTip>
                         </MenuItem.ToolTip>
+                        <MenuItem.Icon>
+                            <Image Source="saveas.png"/>
+                        </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
                     <Separator />
@@ -36,28 +48,53 @@
                         <MenuItem.ToolTip>
                             <ToolTip>Exit editor.</ToolTip>
                         </MenuItem.ToolTip>
+                        <MenuItem.Icon>
+                            <Image Source="exit.png"/>
+                        </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Edit">
-                    <MenuItem Header="_Paint" Cursor="Hand" InputGestureText="P">
-                        <MenuItem.ToolTip>
-                            <ToolTip>Paint tool.</ToolTip>
-                        </MenuItem.ToolTip>
-                    </MenuItem>
-                    <MenuItem Header="_Erase" Cursor="Hand" InputGestureText="E">
-                        <MenuItem.ToolTip>
-                            <ToolTip>Erase tool.</ToolTip>
-                        </MenuItem.ToolTip>
-                    </MenuItem>
                     <MenuItem Header="_Select all" Cursor="Hand" InputGestureText="Ctrl+A">
                         <MenuItem.ToolTip>
                             <ToolTip>Select all field tiles.</ToolTip>
                         </MenuItem.ToolTip>
+                        <MenuItem.Icon>
+                            <Image Source="select.png"/>
+                        </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_Clear all" Cursor="Hand" InputGestureText="Ctrl+X">
                         <MenuItem.ToolTip>
                             <ToolTip>Clear all field tiles.</ToolTip>
                         </MenuItem.ToolTip>
+                        <MenuItem.Icon>
+                            <Image Source="delete.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Preferense" Cursor="Hand" InputGestureText="Ctrl+P">
+                        <MenuItem.ToolTip>
+                            <ToolTip>Clear all field tiles.</ToolTip>
+                        </MenuItem.ToolTip>
+                        <MenuItem.Icon>
+                            <Image Source="pref.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Tools">
+                    <MenuItem Header="_Paint" Cursor="Hand" InputGestureText="P">
+                        <MenuItem.ToolTip>
+                            <ToolTip>Paint tool.</ToolTip>
+                        </MenuItem.ToolTip>
+                        <MenuItem.Icon>
+                            <Image Source="brush.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Erase" Cursor="Hand" InputGestureText="E">
+                        <MenuItem.ToolTip>
+                            <ToolTip>Erase tool.</ToolTip>
+                        </MenuItem.ToolTip>
+                        <MenuItem.Icon>
+                            <Image Source="ers.png"/>
+                        </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Help">
@@ -65,6 +102,9 @@
                         <MenuItem.ToolTip>
                             <ToolTip>Display help.</ToolTip>
                         </MenuItem.ToolTip>
+                        <MenuItem.Icon>
+                            <Image Source="help.png"/>
+                        </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
             </Menu>
@@ -105,7 +145,10 @@
 
     </Grid>
 <Window.InputBindings>
-        <KeyBinding Command="{Binding Close}" Key="Q" Modifiers="Ctrl"/>
+        <KeyBinding Command="{Binding New}" Key="N" Modifiers="Ctrl"/>
+        <KeyBinding Command="{Binding Open}" Key="O" Modifiers="Ctrl"/>
         <KeyBinding Command="{Binding Save}" Key="S" Modifiers="Ctrl"/>
+        <KeyBinding Command="{Binding SaveAs}" Key="S" Modifiers="Ctrl+Shift"/>
+        <KeyBinding Command="{Binding Close}" Key="Q" Modifiers="Ctrl"/>
 </Window.InputBindings>
 </Window>

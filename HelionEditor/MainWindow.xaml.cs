@@ -26,6 +26,9 @@ namespace HelionEditor
         TilePalette palette;
         static public string fileName;
         static public string filePath;
+
+        public static bool saveStatus;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -114,6 +117,75 @@ namespace HelionEditor
         public event EventHandler CanExecuteChanged;
     }
 
+    public class New : ICommand
+    {
+        public void Execute(object parameter)
+        {
+            //new
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public event EventHandler CanExecuteChanged;
+    }
+
+    public class Open : ICommand
+    {
+        public void Execute(object parameter)
+        {
+            OpenFile();
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+        private void OpenFile()
+        {
+            OpenFileDialog filedialog = new OpenFileDialog();
+            filedialog.Filter = "csl files (*.csl)|*.csl|All files (*.*)|*.*";
+            if (filedialog.ShowDialog() == true)
+            {
+                MainWindow.filePath = filedialog.FileName;
+                MainWindow.fileName = System.IO.Path.GetFileNameWithoutExtension(MainWindow.filePath);
+            }
+        }
+
+        public event EventHandler CanExecuteChanged;
+    }
+
+    public class SaveAs : ICommand
+    {
+        public void Execute(object parameter)
+        {
+            SaveFileAs();
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        private void SaveFileAs()
+        {
+            string jsonText = "";
+            SaveFileDialog fileDialog = new SaveFileDialog();
+            fileDialog.Filter = "csl files (*.csl)|*.csl";
+            fileDialog.DefaultExt = ".csl";
+            fileDialog.FileName = MainWindow.fileName + "_copy";
+            if (fileDialog.ShowDialog() == true)
+            {
+                File.WriteAllText(fileDialog.FileName, jsonText);
+                MainWindow.fileName = System.IO.Path.GetFileNameWithoutExtension(fileDialog.FileName);
+            }
+        }
+
+        public event EventHandler CanExecuteChanged;
+    }
+
     public class Save : ICommand
     {
         public void Execute(object parameter)
@@ -148,6 +220,9 @@ namespace HelionEditor
     {
         ICommand _closeCommand = new Close();
         ICommand _saveCommand = new Save();
+        ICommand _saveAsCommand = new SaveAs();
+        ICommand _newCommand = new New();
+        ICommand _openCommand = new Open();
 
         public ICommand Close
         {
@@ -157,6 +232,20 @@ namespace HelionEditor
         public ICommand Save
         {
             get { return _saveCommand; }
+        }
+
+        public ICommand SaveAs
+        {
+            get { return _saveAsCommand; }
+        }
+
+        public ICommand New
+        {
+            get { return _newCommand; }
+        }
+        public ICommand Open
+        {
+            get { return _openCommand; }
         }
     }
 }
