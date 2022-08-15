@@ -24,12 +24,13 @@ namespace HelionEditor
     public partial class MainWindow : Window
     {
         TilePalette palette;
-        string fileName;
-        string filePath;
+        static public string fileName;
+        static public string filePath;
         public MainWindow()
         {
             InitializeComponent();
             palette = new TilePalette(CanvasPalette, ImageSelectedTile).Initialize();
+            DataContext = new MyDataContext();
         }
 
         private void NewItem(object sender, RoutedEventArgs e)
@@ -38,6 +39,20 @@ namespace HelionEditor
         }
 
         private void OpenItem(object sender, RoutedEventArgs e)
+        {
+            OpenFile();
+        }
+
+
+        private void SaveItem(object sender, RoutedEventArgs e)
+        {
+            SaveFile();
+        }
+        private void SaveAs(object sender, RoutedEventArgs e)
+        {
+            SaveFileAs();
+        }
+        private void OpenFile()
         {
             OpenFileDialog filedialog = new OpenFileDialog();
             filedialog.Filter = "csl files (*.csl)|*.csl|All files (*.*)|*.*";
@@ -48,7 +63,7 @@ namespace HelionEditor
             }
         }
 
-        private void SaveItem(object sender, RoutedEventArgs e)
+        private void SaveFile()
         {
             string jsonText = "";
             SaveFileDialog fileDialog = new SaveFileDialog();
@@ -62,13 +77,13 @@ namespace HelionEditor
             }
         }
 
-        private void SaveAs(object sender, RoutedEventArgs e)
+        private void SaveFileAs()
         {
             string jsonText = "";
             SaveFileDialog fileDialog = new SaveFileDialog();
             fileDialog.Filter = "csl files (*.csl)|*.csl";
             fileDialog.DefaultExt = ".csl";
-            fileDialog.FileName = fileName+"_copy";
+            fileDialog.FileName = fileName + "_copy";
             if (fileDialog.ShowDialog() == true)
             {
                 File.WriteAllText(fileDialog.FileName, jsonText);
@@ -76,9 +91,72 @@ namespace HelionEditor
             }
         }
 
-        private void Exit(object sender, RoutedEventArgs e)
+        public void Exit(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+    }
+
+
+
+    public class Close : ICommand
+    {
+        public void Execute(object parameter)
+        {
+            Application.Current.Shutdown();
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public event EventHandler CanExecuteChanged;
+    }
+
+    public class Save : ICommand
+    {
+        public void Execute(object parameter)
+        {
+            SaveFile();
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        private void SaveFile()
+        {
+            string jsonText = "";
+            SaveFileDialog fileDialog = new SaveFileDialog();
+            fileDialog.Filter = "csl files (*.csl)|*.csl";
+            fileDialog.DefaultExt = ".csl";
+            fileDialog.FileName = MainWindow.fileName;
+            if (fileDialog.ShowDialog() == true)
+            {
+                File.WriteAllText(fileDialog.FileName, jsonText);
+                MainWindow.fileName = System.IO.Path.GetFileNameWithoutExtension(fileDialog.FileName);
+            }
+        }
+
+        public event EventHandler CanExecuteChanged;
+    }
+
+
+    public class MyDataContext
+    {
+        ICommand _closeCommand = new Close();
+        ICommand _saveCommand = new Save();
+
+        public ICommand Close
+        {
+            get { return _closeCommand; }
+        }
+
+        public ICommand Save
+        {
+            get { return _saveCommand; }
         }
     }
 }

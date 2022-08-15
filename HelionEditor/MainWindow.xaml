@@ -5,34 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HelionEditor"
         mc:Ignorable="d"
-        Title="Tile Editor" Height="437" Width="765" MinWidth="500" MinHeight="300">
+        Title="HGL Editor" Height="437" Width="765" MinWidth="500" MinHeight="300" Icon="schichten.png">
     <Grid Background="#FF232323">
-        <Border BorderThickness="1" BorderBrush="#383838" Margin="235,30,10,10" Panel.ZIndex="1">
-            <Canvas MinWidth="100" MinHeight="100" Background="#FF323131" Panel.ZIndex="2" Margin="0"/>
-        </Border>
-        <Canvas x:Name="CanvasField" Margin="221,0,0,0" Background="#FF424242"/>
-        <Label Content="X:200 Y:147 'empty'" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom" Width="221" Foreground="White" HorizontalContentAlignment="Center"/>
-        <TextBox Height="23" TextWrapping="Wrap" Text="24" Canvas.Top="236" Width="23" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="126,0,0,126" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <TextBox Height="23" TextWrapping="Wrap" Text="16" Canvas.Top="236" Width="23" Canvas.Left="92" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="79,0,0,126" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <Button HorizontalAlignment="Left" Margin="10,0,0,76" VerticalAlignment="Bottom" Width="40" Height="40" Background="#FFBDFDCB">
-            <Image Source="/Resources/paintbrush.png" Width="32" Height="32" />
-        </Button>
-        <Button HorizontalAlignment="Left" Margin="55,0,0,76" VerticalAlignment="Bottom" Width="40" Height="40">
-            <Image Source="Resources/eraser.png" Width="32" Height="32"></Image>
-        </Button>
-        <Button HorizontalAlignment="Left" Margin="100,0,0,76" VerticalAlignment="Bottom" Width="40" Height="40" RenderTransformOrigin="0.025,0.45">
-            <Image Source="Resources/crop.png" Width="32" Height="32"></Image>
-        </Button>
-        <Slider HorizontalAlignment="Left" Margin="10,0,0,26" VerticalAlignment="Bottom" Width="201" SmallChange="0" TickPlacement="BottomRight" IsSnapToTickEnabled="True" Maximum="5"/>
-        <Label Content="Layer: 0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,50" Width="201" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-        <Label Content="width" HorizontalAlignment="Left" Margin="22,0,0,126" VerticalAlignment="Bottom" Height="23" Width="52" Foreground="#FFCDCDCD" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Padding="0"/>
-        <Label Content="height" HorizontalAlignment="Left" Margin="154,0,0,126" VerticalAlignment="Bottom" Height="23" Width="52" Foreground="#FFCDCDCD" VerticalContentAlignment="Center" Padding="0"/>
-        <Label Content="x" HorizontalAlignment="Left" Margin="107,0,0,126" VerticalAlignment="Bottom" Height="23" Width="14" Foreground="#FFCDCDCD" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0"/>
-        <ScrollViewer HorizontalAlignment="Left" Margin="10,29,0,159" Width="201" Cursor="None">
-            <Canvas x:Name="CanvasPalette" Margin="0" Background="#FF363636" Height="500" VerticalAlignment="Top" Cursor="Hand"/>
-        </ScrollViewer>
-        <Image x:Name="ImageSelectedTile" HorizontalAlignment="Left" Height="40" Margin="166,0,0,76" VerticalAlignment="Bottom" Width="40"/>
-
         <DockPanel>
             <Menu DockPanel.Dock="Top" Background="#FFF0F0F0">
                 <MenuItem Header="_File">
@@ -98,8 +72,40 @@
 
             </StackPanel>
         </DockPanel>
+        <Border BorderThickness="1" BorderBrush="#383838" Margin="235,30,10,10" Panel.ZIndex="1">
+            <Canvas MinWidth="100" MinHeight="100" Background="#FF323131" Panel.ZIndex="2" Margin="0"/>
+        </Border>
+        <Canvas x:Name="CanvasField" Margin="221,18,0,0" Background="#FF424242"/>
+        <Label Content="X:200 Y:147 'empty'" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom" Width="221" Foreground="White" HorizontalContentAlignment="Center"/>
+        <TextBox Height="23" TextWrapping="Wrap" Text="24" Canvas.Top="236" Width="23" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="126,0,0,126" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <TextBox Height="23" TextWrapping="Wrap" Text="16" Canvas.Top="236" Width="23" Canvas.Left="92" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="79,0,0,126" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Button HorizontalAlignment="Left" Margin="10,0,0,76" VerticalAlignment="Bottom" Width="40" Height="40" Background="#FFBDFDCB">
+            <Image Source="/Resources/paintbrush.png" Width="32" Height="32" />
+        </Button>
+        <Button HorizontalAlignment="Left" Margin="55,0,0,76" VerticalAlignment="Bottom" Width="40" Height="40">
+            <Image Source="Resources/eraser.png" Width="32" Height="32"></Image>
+        </Button>
+        <Button HorizontalAlignment="Left" Margin="100,0,0,76" VerticalAlignment="Bottom" Width="40" Height="40" RenderTransformOrigin="0.025,0.45">
+            <Image Source="Resources/crop.png" Width="32" Height="32"></Image>
+        </Button>
+        <Slider HorizontalAlignment="Left" Margin="10,0,0,26" VerticalAlignment="Bottom" Width="201" SmallChange="0" TickPlacement="BottomRight" IsSnapToTickEnabled="True" Maximum="5"/>
+        <Label Content="Layer: 0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,50" Width="201" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label Content="width" HorizontalAlignment="Left" Margin="22,0,0,126" VerticalAlignment="Bottom" Height="23" Width="52" Foreground="#FFCDCDCD" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Padding="0"/>
+        <Label Content="height" HorizontalAlignment="Left" Margin="154,0,0,126" VerticalAlignment="Bottom" Height="23" Width="52" Foreground="#FFCDCDCD" VerticalContentAlignment="Center" Padding="0"/>
+        <Label Content="x" HorizontalAlignment="Left" Margin="107,0,0,126" VerticalAlignment="Bottom" Height="23" Width="14" Foreground="#FFCDCDCD" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0"/>
+        <ScrollViewer HorizontalAlignment="Left" Margin="10,29,0,159" Width="201" Cursor="None">
+            <Canvas x:Name="CanvasPalette" Margin="0" Background="#FF363636" Height="500" VerticalAlignment="Top" Cursor="Hand"/>
+        </ScrollViewer>
+        <Image x:Name="ImageSelectedTile" HorizontalAlignment="Left" Height="40" Margin="166,0,0,76" VerticalAlignment="Bottom" Width="40"/>
+
+
+            
+
 
 
     </Grid>
-
+<Window.InputBindings>
+        <KeyBinding Command="{Binding Close}" Key="Q" Modifiers="Ctrl"/>
+        <KeyBinding Command="{Binding Save}" Key="S" Modifiers="Ctrl"/>
+</Window.InputBindings>
 </Window>
