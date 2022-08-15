@@ -11,7 +11,7 @@ namespace HelionEditor
     [Serializable]
     class GameLevel
     {
-        LevelLayer[] levelLayers;
+        public LevelLayer[] levelLayers;
         public int width;
         public int height;
 
@@ -20,6 +20,20 @@ namespace HelionEditor
             this.width = width;
             this.height = height;
             levelLayers = new LevelLayer[6];
+            for (int i = 0; i < levelLayers.Length; i++)
+            {
+                levelLayers[i] = new LevelLayer(width, height);
+            }
+        }
+
+        public bool SetTile(int layer, int X, int Y, int ID)
+        {
+            if (levelLayers[layer].cells[X, Y] != ID)
+            {
+                levelLayers[layer].cells[X, Y] = ID;
+                return true;
+            }
+            return false;
         }
 
         public byte[] ToByteArray()
@@ -49,6 +63,13 @@ namespace HelionEditor
         public LevelLayer(int width, int height)
         {
             cells = new int[width, height];
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    cells[x, y] = -1;
+                }
+            }
         }
     }
 }

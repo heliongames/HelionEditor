@@ -18,9 +18,6 @@ using System.Windows.Shapes;
 
 namespace HelionEditor
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         TilePalette palette;
@@ -28,13 +25,14 @@ namespace HelionEditor
         static public string filePath;
 
         public static bool saveStatus;
-        static GameLevel gameLevel;
+        static Editor editor;
 
         public MainWindow()
         {
             InitializeComponent();
             palette = new TilePalette(CanvasPalette, ImageSelectedTile).Initialize();
             DataContext = new MyDataContext();
+            editor = new Editor(CanvasLevel, palette);
         }
 
         private void NewItem(object sender, RoutedEventArgs e)
@@ -60,7 +58,7 @@ namespace HelionEditor
 
         public static void NewFile()
         {
-            gameLevel = new GameLevel(32, 32);
+            editor.Init(new GameLevel(16, 16));
         }
 
         public static void OpenFile()
@@ -71,13 +69,13 @@ namespace HelionEditor
             {
                 filePath = filedialog.FileName;
                 byte[] data = File.ReadAllBytes(filePath);
-                gameLevel = GameLevel.FromByteArray(data);
+                editor.Init(GameLevel.FromByteArray(data));
             }
         }
 
         public static void SaveFile()
         {
-            byte[] data = gameLevel.ToByteArray();
+            byte[] data = editor.level.ToByteArray();
             SaveFileDialog fileDialog = new SaveFileDialog();
             fileDialog.Filter = "csl files (*.csl)|*.csl";
             fileDialog.DefaultExt = ".csl";
@@ -91,7 +89,7 @@ namespace HelionEditor
 
         public static void SaveFileAs()
         {
-            byte[] data = gameLevel.ToByteArray();
+            byte[] data = editor.level.ToByteArray();
             SaveFileDialog fileDialog = new SaveFileDialog();
             fileDialog.Filter = "csl files (*.csl)|*.csl";
             fileDialog.DefaultExt = ".csl";
@@ -103,9 +101,21 @@ namespace HelionEditor
             }
         }
 
-        public static void Exit(object sender, RoutedEventArgs e)
+        public void Exit(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void CanvasLevel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                var mousePosition = e.GetPosition(CanvasLevel);
+                int tileX = (int)mousePosition.X / 32;
+                int tileY = (int)mousePosition.Y / 32;
+                if (editor.level.SetTile(0, tileX, tileY, palette.selectedID))
+                    editor.UpdateTile(tileX, tileY, 0);
+            }
         }
     }
 

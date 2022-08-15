@@ -113,9 +113,12 @@
             </StackPanel>
         </DockPanel>
         <Border BorderThickness="1" BorderBrush="#383838" Margin="235,30,10,10" Panel.ZIndex="1">
-            <Canvas MinWidth="100" MinHeight="100" Background="#FF323131" Panel.ZIndex="2" Margin="-1,-1,0,0"/>
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <Canvas x:Name="CanvasLevel" MinWidth="100" MinHeight="100" Background="#FF323131" Panel.ZIndex="2" Margin="-1,-1,0,0" ScrollViewer.HorizontalScrollBarVisibility="Auto" MouseMove="CanvasLevel_MouseMove">
+                </Canvas>
+            </ScrollViewer>
         </Border>
-        <Canvas x:Name="CanvasField" Margin="221,18,0,0" Background="#FF424242"/>
+        <Canvas x:Name="CanvasBackground" Margin="221,18,0,0" Background="#FF424242"/>
         <Label Content="X:200 Y:147 'empty'" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom" Width="221" Foreground="White" HorizontalContentAlignment="Center"/>
         <TextBox Height="23" TextWrapping="Wrap" Text="24" Canvas.Top="236" Width="23" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="126,0,0,126" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <TextBox Height="23" TextWrapping="Wrap" Text="16" Canvas.Top="236" Width="23" Canvas.Left="92" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="79,0,0,126" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>

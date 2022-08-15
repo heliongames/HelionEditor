@@ -16,7 +16,9 @@ namespace HelionEditor
         Canvas canvas;
         System.Windows.Controls.Image selectedImage;
 
-        List<BitmapImage> tiles = new List<BitmapImage>();
+        public List<BitmapImage> tiles = new List<BitmapImage>();
+
+        public int selectedID = -1;
 
         public TilePalette(Canvas canvas, System.Windows.Controls.Image selectedImage)
         {
@@ -32,7 +34,7 @@ namespace HelionEditor
             int tileY = (int)(mousePosition.Y - 3) / 36;
             int tileID = tileY * 5 + tileX;
             Console.WriteLine(tileID + ") " + tileX + ":" + tileY);
-            //((System.Windows.Controls.Image)canvas.Children[tileID]).Visibility = Visibility.Hidden;
+            selectedID = tileID;
             selectedImage.Source = tiles[tileID];
         }
 
