@@ -28,6 +28,7 @@ namespace HelionEditor
         static public string filePath;
 
         public static bool saveStatus;
+        static GameLevel gameLevel;
 
         public MainWindow()
         {
@@ -38,7 +39,7 @@ namespace HelionEditor
 
         private void NewItem(object sender, RoutedEventArgs e)
         {
-
+            gameLevel = new GameLevel(32, 32);
         }
 
         private void OpenItem(object sender, RoutedEventArgs e)
@@ -64,34 +65,35 @@ namespace HelionEditor
             if (filedialog.ShowDialog() == true)
             {
                 filePath = filedialog.FileName;
-                fileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
+                byte[] data = File.ReadAllBytes(filePath);
+                gameLevel = GameLevel.FromByteArray(data);
             }
         }
 
         private void SaveFile()
         {
-            string jsonText = "";
+            byte[] data = gameLevel.ToByteArray();
             SaveFileDialog fileDialog = new SaveFileDialog();
             fileDialog.Filter = "csl files (*.csl)|*.csl";
             fileDialog.DefaultExt = ".csl";
             fileDialog.FileName = fileName;
             if (fileDialog.ShowDialog() == true)
             {
-                File.WriteAllText(fileDialog.FileName, jsonText);
+                File.WriteAllBytes(fileDialog.FileName, data);
                 fileName = System.IO.Path.GetFileNameWithoutExtension(fileDialog.FileName);
             }
         }
 
         private void SaveFileAs()
         {
-            string jsonText = "";
+            byte[] data = gameLevel.ToByteArray();
             SaveFileDialog fileDialog = new SaveFileDialog();
             fileDialog.Filter = "csl files (*.csl)|*.csl";
             fileDialog.DefaultExt = ".csl";
             fileDialog.FileName = fileName + "_copy";
             if (fileDialog.ShowDialog() == true)
             {
-                File.WriteAllText(fileDialog.FileName, jsonText);
+                File.WriteAllBytes(fileDialog.FileName, data);
                 fileName = System.IO.Path.GetFileNameWithoutExtension(fileDialog.FileName);
             }
         }
