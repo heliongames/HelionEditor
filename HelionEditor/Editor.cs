@@ -11,18 +11,33 @@ using System.Windows.Media.Imaging;
 
 namespace HelionEditor
 {
+    enum Tool
+    {
+        Brush,
+        Erase,
+        Bucket
+    }
+
     class Editor
     {
         Canvas canvas;
         public GameLevel level;
         BitmapImage emptyCell;
         TilePalette palette;
+        int layer;
+        Tool tool = Tool.Brush;
 
-        public Editor(Canvas canvas, TilePalette palette)
+        public Editor(Canvas canvas, TilePalette palette, Slider layerSelector)
         {
             this.palette = palette;
             this.canvas = canvas;
             emptyCell = DrawEmptyCell();
+            layerSelector.ValueChanged += LayerSelector_ValueChanged;
+        }
+
+        private void LayerSelector_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            layer = (int)e.NewValue;
         }
 
         BitmapImage DrawEmptyCell()
@@ -32,7 +47,7 @@ namespace HelionEditor
             {
                 for (int yy = 0; yy < 32; yy++)
                 {
-                    if (xx == 0 || yy == 0 || xx == 31 || yy == 31)
+                    if (xx == 31 || yy == 31)
                     {
                         bmp.SetPixel(xx, yy, Color.WhiteSmoke);
                     }
@@ -58,28 +73,127 @@ namespace HelionEditor
             UpdateCanvas(level.width, level.height, level.levelLayers);
         }
 
-        public void UpdateTile(int X, int Y, int layer)
+        public void ChangeTool(Tool tool)
         {
-            ((System.Windows.Controls.Image)canvas.Children[Y * level.width + X]).Source = palette.tiles[level.levelLayers[layer].cells[X, Y]];
+            this.tool = tool;
         }
+
+        public void UpdateTile(int X, int Y)
+        {
+            if (X >= 0 && Y >= 0 && X < level.width && Y < level.height && level != null)
+                switch (tool)
+                {
+                    case Tool.Brush:
+                        UseBrush(X, Y);
+                        break;
+                    case Tool.Erase:
+                        UseErase(X, Y);
+                        break;
+                    case Tool.Bucket:
+                        UseBucket(X, Y);
+                        break;
+                }
+        }
+
+        void UseBrush(int X, int Y)
+        {
+            if (level.SetTile(layer, X, Y, palette.selectedID))
+                ((System.Windows.Controls.Image)canvas.Children[layer * level.width * level.height + Y * level.width + X]).Source = palette.tiles[level.levelLayers[layer].cells[X, Y]];
+        }
+        void UseErase(int X, int Y)
+        {
+            level.SetTile(layer, X, Y, -1);
+            if (layer == 0)
+                ((System.Windows.Controls.Image)canvas.Children[layer * level.width * level.height + Y * level.width + X]).Source = emptyCell;
+            else
+                ((System.Windows.Controls.Image)canvas.Children[layer * level.width * level.height + Y * level.width + X]).Source = null;
+        }
+
+        void UseBucket(int X, int Y)
+        {
+            int touchedID = level.levelLayers[layer].cells[X, Y];
+            Queue<System.Drawing.Point> checkList = new Queue<System.Drawing.Point>();
+            bool[,] checkedList = new bool[level.width, level.height];
+            List<System.Drawing.Point> paintList = new List<System.Drawing.Point>();
+            paintList.Add(new System.Drawing.Point(X, Y));
+            foreach (var neighbor in GetNeighbors(X, Y))
+            {
+                checkList.Enqueue(neighbor);
+            }
+            while (checkList.Count > 0)
+            {
+                var neighbor = checkList.Dequeue();
+                checkedList[neighbor.X, neighbor.Y] = true;
+                if (level.levelLayers[layer].cells[neighbor.X,neighbor.Y] == touchedID)
+                {
+                    paintList.Add(neighbor);
+                    foreach (var nbr in GetNeighbors(neighbor.X, neighbor.Y))
+                    {
+                        if (!checkedList[nbr.X, nbr.Y])
+                        {
+                            checkList.Enqueue(nbr);
+                        }
+                    }
+                }
+            }
+            foreach (var point in paintList)
+            {
+                UseBrush(point.X, point.Y);
+            }
+        }
+
+        public void ClearLayer()
+        {
+            for (int x = 0; x < level.width; x++)
+            {
+                for (int y = 0; y < level.height; y++)
+                {
+                    UseErase(x, y);
+                }
+            }
+        }
+
+        List<System.Drawing.Point> GetNeighbors(int X, int Y)
+        {
+            var neighbors = new List<System.Drawing.Point>();
+            if (X > 0)
+                neighbors.Add(new System.Drawing.Point(X - 1, Y));
+            if (Y > 0)
+                neighbors.Add(new System.Drawing.Point(X, Y - 1));
+            if (X < level.width-1)
+                neighbors.Add(new System.Drawing.Point(X + 1, Y));
+            if (Y < level.height-1)
+                neighbors.Add(new System.Drawing.Point(X, Y + 1));
+            return neighbors;
+        } 
 
         void UpdateCanvas(int width, int height, LevelLayer[] data)
         {
             canvas.Children.Clear();
-            int currentID = 0;
-            for (int y = 0; y < height; y++)
+            
+            for (int l = 0; l < 5; l++)
             {
-                for (int x = 0; x < width; x++)
+                int currentID = 0;
+                for (int y = 0; y < height; y++)
+                {
+                    for (int x = 0; x < width; x++)
                     {
-                    System.Windows.Controls.Image image = new System.Windows.Controls.Image();
-                    image.Width = image.Height = 32;
-                    int id = data[0].cells[x, y];
-                    image.Source = id== -1 ? emptyCell : palette.tiles[id];
-                    image.Margin = new Thickness((currentID % width) * 32, currentID / width * 32, 0, 0);
-                    canvas.Children.Add(image);
-                    currentID++;
+                        System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                        image.Width = image.Height = 32;
+                        int id = data[l].cells[x, y];
+                        if (l == 0)
+                        {
+                            image.Source = id == -1 ? emptyCell : palette.tiles[id];
+                        } 
+                        else if (id != -1)
+                            image.Source = palette.tiles[id];
+                        image.Margin = new Thickness(currentID % width * 32, currentID / width * 32, 0, 0);
+                        canvas.Children.Add(image);
+                        currentID++;
+                    }
                 }
             }
+
             canvas.Width = width * 32;
             canvas.Height = height * 32;
         }

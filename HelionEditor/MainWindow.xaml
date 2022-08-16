@@ -54,17 +54,9 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Edit">
-                    <MenuItem Header="_Select all" Cursor="Hand" InputGestureText="Ctrl+A">
+                    <MenuItem Header="_Clear layer" Cursor="Hand" InputGestureText="Ctrl+X" Click="ClearLayer">
                         <MenuItem.ToolTip>
-                            <ToolTip>Select all field tiles.</ToolTip>
-                        </MenuItem.ToolTip>
-                        <MenuItem.Icon>
-                            <Image Source="select.png"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="_Clear all" Cursor="Hand" InputGestureText="Ctrl+X">
-                        <MenuItem.ToolTip>
-                            <ToolTip>Clear all field tiles.</ToolTip>
+                            <ToolTip>Clear layer tiles.</ToolTip>
                         </MenuItem.ToolTip>
                         <MenuItem.Icon>
                             <Image Source="delete.png"/>
@@ -93,7 +85,15 @@
                             <ToolTip>Eraser tool.</ToolTip>
                         </MenuItem.ToolTip>
                         <MenuItem.Icon>
-                            <Image Source="ers.png"/>
+                            <Image Source="Resources/ers.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Bucket" Cursor="Hand" InputGestureText="R">
+                        <MenuItem.ToolTip>
+                            <ToolTip>Bucket tool.</ToolTip>
+                        </MenuItem.ToolTip>
+                        <MenuItem.Icon>
+                            <Image Source="Resources/paint-bucket.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
@@ -114,7 +114,7 @@
         </DockPanel>
         <Border BorderThickness="1" BorderBrush="#383838" Margin="235,30,10,10" Panel.ZIndex="1">
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                <Canvas x:Name="CanvasLevel" MinWidth="100" MinHeight="100" Background="#FF323131" Panel.ZIndex="2" Margin="-1,-1,0,0" ScrollViewer.HorizontalScrollBarVisibility="Auto" MouseMove="CanvasLevel_MouseMove">
+                <Canvas x:Name="CanvasLevel" MinWidth="100" MinHeight="100" Background="#FF323131" Panel.ZIndex="2" Margin="-1,-1,0,0" ScrollViewer.HorizontalScrollBarVisibility="Auto" MouseMove="CanvasLevel_MouseMove" MouseLeftButtonDown="CanvasLevel_MouseLeftButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Canvas>
             </ScrollViewer>
         </Border>
@@ -122,16 +122,16 @@
         <Label Content="X:200 Y:147 'empty'" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom" Width="221" Foreground="White" HorizontalContentAlignment="Center"/>
         <TextBox Height="23" TextWrapping="Wrap" Text="24" Canvas.Top="236" Width="23" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="126,0,0,126" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <TextBox Height="23" TextWrapping="Wrap" Text="16" Canvas.Top="236" Width="23" Canvas.Left="92" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="79,0,0,126" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <Button HorizontalAlignment="Left" Margin="10,0,0,76" VerticalAlignment="Bottom" Width="40" Height="40" Background="#FFBDFDCB">
+        <Button x:Name="ButtonToolBrush" HorizontalAlignment="Left" Margin="10,0,0,76" VerticalAlignment="Bottom" Width="40" Height="40" Click="ButtonToolBrush_Click" Background="#FF00FA96">
             <Image Source="/Resources/paintbrush.png" Width="32" Height="32" />
         </Button>
-        <Button HorizontalAlignment="Left" Margin="55,0,0,76" VerticalAlignment="Bottom" Width="40" Height="40">
+        <Button x:Name="ButtonToolErase" HorizontalAlignment="Left" Margin="55,0,0,76" VerticalAlignment="Bottom" Width="40" Height="40" Click="ButtonToolErase_Click" Background="White">
             <Image Source="Resources/eraser.png" Width="32" Height="32"></Image>
         </Button>
-        <Button HorizontalAlignment="Left" Margin="100,0,0,76" VerticalAlignment="Bottom" Width="40" Height="40" RenderTransformOrigin="0.025,0.45">
-            <Image Source="Resources/crop.png" Width="32" Height="32"></Image>
+        <Button x:Name="ButtonToolBucket" HorizontalAlignment="Left" Margin="100,0,0,76" VerticalAlignment="Bottom" Width="40" Height="40" RenderTransformOrigin="0.025,0.45" Click="ButtonToolBucket_Click">
+            <Image Source="Resources/paint-bucket.png" Width="32" Height="32"></Image>
         </Button>
-        <Slider HorizontalAlignment="Left" Margin="10,0,0,26" VerticalAlignment="Bottom" Width="201" SmallChange="0" TickPlacement="BottomRight" IsSnapToTickEnabled="True" Maximum="5"/>
+        <Slider x:Name="SliderLayerSelector" HorizontalAlignment="Left" Margin="10,0,0,26" VerticalAlignment="Bottom" Width="201" SmallChange="0" TickPlacement="BottomRight" IsSnapToTickEnabled="True" Maximum="4"/>
         <Label Content="Layer: 0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,50" Width="201" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
         <Label Content="width" HorizontalAlignment="Left" Margin="22,0,0,126" VerticalAlignment="Bottom" Height="23" Width="52" Foreground="#FFCDCDCD" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Padding="0"/>
         <Label Content="height" HorizontalAlignment="Left" Margin="154,0,0,126" VerticalAlignment="Bottom" Height="23" Width="52" Foreground="#FFCDCDCD" VerticalContentAlignment="Center" Padding="0"/>
@@ -142,16 +142,17 @@
         <Image x:Name="ImageSelectedTile" HorizontalAlignment="Left" Height="40" Margin="166,0,0,76" VerticalAlignment="Bottom" Width="40"/>
 
 
-            
+
 
 
 
     </Grid>
-<Window.InputBindings>
+    <Window.InputBindings>
         <KeyBinding Command="{Binding New}" Key="N" Modifiers="Ctrl"/>
         <KeyBinding Command="{Binding Open}" Key="O" Modifiers="Ctrl"/>
         <KeyBinding Command="{Binding Save}" Key="S" Modifiers="Ctrl"/>
         <KeyBinding Command="{Binding SaveAs}" Key="S" Modifiers="Ctrl+Shift"/>
         <KeyBinding Command="{Binding Close}" Key="Q" Modifiers="Ctrl"/>
-</Window.InputBindings>
+        <KeyBinding Command="{Binding ClearLayer}" Key="X" Modifiers="Ctrl"/>
+    </Window.InputBindings>
 </Window>

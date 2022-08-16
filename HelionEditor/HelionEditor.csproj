@@ -149,10 +149,13 @@
     <Resource Include="brush.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ers.png" />
+    <Resource Include="Resources\ers.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\paint-bucket.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

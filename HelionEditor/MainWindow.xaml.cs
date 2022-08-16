@@ -32,7 +32,7 @@ namespace HelionEditor
             InitializeComponent();
             palette = new TilePalette(CanvasPalette, ImageSelectedTile).Initialize();
             DataContext = new MyDataContext();
-            editor = new Editor(CanvasLevel, palette);
+            editor = new Editor(CanvasLevel, palette, SliderLayerSelector);
         }
 
         private void NewItem(object sender, RoutedEventArgs e)
@@ -110,12 +110,61 @@ namespace HelionEditor
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var mousePosition = e.GetPosition(CanvasLevel);
-                int tileX = (int)mousePosition.X / 32;
-                int tileY = (int)mousePosition.Y / 32;
-                if (editor.level.SetTile(0, tileX, tileY, palette.selectedID))
-                    editor.UpdateTile(tileX, tileY, 0);
+                Draw(e.GetPosition(CanvasLevel));
             }
+        }
+
+        private void CanvasLevel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Draw(e.GetPosition(CanvasLevel));
+        }
+
+        void Draw(System.Windows.Point mousePosition)
+        {
+            int tileX = (int)mousePosition.X / 32;
+            int tileY = (int)mousePosition.Y / 32;
+            editor.UpdateTile(tileX, tileY);
+        }
+
+        SolidColorBrush button = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 255));
+        SolidColorBrush selectedButtonColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 250, 150));
+
+        private void ButtonToolBrush_Click(object sender, RoutedEventArgs e)
+        {
+            ClearSelectedTool();
+            ButtonToolBrush.Background = selectedButtonColor;
+            editor.ChangeTool(Tool.Brush);
+        }
+
+        private void ButtonToolErase_Click(object sender, RoutedEventArgs e)
+        {
+            ClearSelectedTool();
+            ButtonToolErase.Background = selectedButtonColor;
+            editor.ChangeTool(Tool.Erase);
+        }
+
+        private void ButtonToolBucket_Click(object sender, RoutedEventArgs e)
+        {
+            ClearSelectedTool();
+            ButtonToolBucket.Background = selectedButtonColor;
+            editor.ChangeTool(Tool.Bucket);
+        }
+
+        void ClearSelectedTool()
+        {
+            ButtonToolBrush.Background = button;
+            ButtonToolBucket.Background = button;
+            ButtonToolErase.Background = button;
+        }
+
+        public static void ClearLayer()
+        {
+            editor.ClearLayer();
+        }
+
+        private void ClearLayer(object sender, RoutedEventArgs e)
+        {
+            editor.ClearLayer();
         }
     }
 
@@ -196,6 +245,21 @@ namespace HelionEditor
         public event EventHandler CanExecuteChanged;
     }
 
+    public class ClearLayer : ICommand
+    {
+        public void Execute(object parameter)
+        {
+            MainWindow.ClearLayer();
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public event EventHandler CanExecuteChanged;
+    }
+
 
     public class MyDataContext
     {
@@ -204,6 +268,7 @@ namespace HelionEditor
         ICommand _saveAsCommand = new SaveAs();
         ICommand _newCommand = new New();
         ICommand _openCommand = new Open();
+        ICommand _clearLayerCommand = new ClearLayer();
 
         public ICommand Close
         {
@@ -227,6 +292,11 @@ namespace HelionEditor
         public ICommand Open
         {
             get { return _openCommand; }
+        }
+
+        public ICommand ClearLayer
+        {
+            get { return _clearLayerCommand; }
         }
     }
 }
