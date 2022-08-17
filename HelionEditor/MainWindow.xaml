@@ -114,7 +114,7 @@
         </DockPanel>
         <Border BorderThickness="1" BorderBrush="#383838" Margin="235,30,10,10" Panel.ZIndex="1">
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                <Canvas x:Name="CanvasLevel" MinWidth="100" MinHeight="100" Background="#FF323131" Panel.ZIndex="2" Margin="-1,-1,0,0" ScrollViewer.HorizontalScrollBarVisibility="Auto" MouseMove="CanvasLevel_MouseMove" MouseLeftButtonDown="CanvasLevel_MouseLeftButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Canvas x:Name="CanvasLevel"  Background="#FF323131" Panel.ZIndex="2" Margin="-1,-1,0,0" ScrollViewer.HorizontalScrollBarVisibility="Auto" MouseMove="CanvasLevel_MouseMove" MouseLeftButtonDown="CanvasLevel_MouseLeftButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Canvas>
             </ScrollViewer>
         </Border>
@@ -132,7 +132,7 @@
             <Image Source="Resources/paint-bucket.png" Width="32" Height="32"></Image>
         </Button>
         <Slider x:Name="SliderLayerSelector" HorizontalAlignment="Left" Margin="10,0,0,26" VerticalAlignment="Bottom" Width="201" SmallChange="0" TickPlacement="BottomRight" IsSnapToTickEnabled="True" Maximum="4"/>
-        <Label Content="Layer: 0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,50" Width="201" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label x:Name="LayersCounter" Content="Layer: 0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,50" Width="201" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
         <Label Content="width" HorizontalAlignment="Left" Margin="22,0,0,126" VerticalAlignment="Bottom" Height="23" Width="52" Foreground="#FFCDCDCD" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Padding="0"/>
         <Label Content="height" HorizontalAlignment="Left" Margin="154,0,0,126" VerticalAlignment="Bottom" Height="23" Width="52" Foreground="#FFCDCDCD" VerticalContentAlignment="Center" Padding="0"/>
         <Label Content="x" HorizontalAlignment="Left" Margin="107,0,0,126" VerticalAlignment="Bottom" Height="23" Width="14" Foreground="#FFCDCDCD" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0"/>
@@ -154,5 +154,10 @@
         <KeyBinding Command="{Binding SaveAs}" Key="S" Modifiers="Ctrl+Shift"/>
         <KeyBinding Command="{Binding Close}" Key="Q" Modifiers="Ctrl"/>
         <KeyBinding Command="{Binding ClearLayer}" Key="X" Modifiers="Ctrl"/>
+        <KeyBinding Command="{Binding Preferences}" Key="P" Modifiers="Ctrl"/>
+        <KeyBinding Command="{Binding BrushTool}" Key="B"/>
+        <KeyBinding Command="{Binding EreaseTool}" Key="E"/>
+        <KeyBinding Command="{Binding BucketTool}" Key="R"/>
+        <KeyBinding Command="{Binding Help}" Key="H"/>
     </Window.InputBindings>
 </Window>

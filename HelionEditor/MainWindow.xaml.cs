@@ -27,12 +27,15 @@ namespace HelionEditor
         public static bool saveStatus;
         static Editor editor;
 
+        //static Button buttonBrush = ButtonToolBrush;
+
         public MainWindow()
         {
             InitializeComponent();
+            ClearSelectedTool();
             palette = new TilePalette(CanvasPalette, ImageSelectedTile).Initialize();
             DataContext = new MyDataContext();
-            editor = new Editor(CanvasLevel, palette, SliderLayerSelector);
+            editor = new Editor(CanvasLevel, palette, SliderLayerSelector, LayersCounter);
         }
 
         private void NewItem(object sender, RoutedEventArgs e)
@@ -44,7 +47,6 @@ namespace HelionEditor
         {
             OpenFile();
         }
-
 
         private void SaveItem(object sender, RoutedEventArgs e)
         {
@@ -126,7 +128,7 @@ namespace HelionEditor
             editor.UpdateTile(tileX, tileY);
         }
 
-        SolidColorBrush button = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 255));
+        static SolidColorBrush button = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 255));
         SolidColorBrush selectedButtonColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 250, 150));
 
         private void ButtonToolBrush_Click(object sender, RoutedEventArgs e)
@@ -150,7 +152,7 @@ namespace HelionEditor
             editor.ChangeTool(Tool.Bucket);
         }
 
-        void ClearSelectedTool()
+        public void ClearSelectedTool()
         {
             ButtonToolBrush.Background = button;
             ButtonToolBucket.Background = button;
@@ -260,6 +262,81 @@ namespace HelionEditor
         public event EventHandler CanExecuteChanged;
     }
 
+    public class Preferences : ICommand
+    {
+        public void Execute(object parameter)
+        {
+            //Pref
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public event EventHandler CanExecuteChanged;
+    }
+
+    public class BrushTool : ICommand
+    {
+        public void Execute(object parameter)
+        {
+            //brush
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public event EventHandler CanExecuteChanged;
+    }
+
+    public class EraseTool : ICommand
+    {
+        public void Execute(object parameter)
+        {
+            //erase
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public event EventHandler CanExecuteChanged;
+    }
+
+    public class BucketTool : ICommand
+    {
+        public void Execute(object parameter)
+        {
+            //bucket
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public event EventHandler CanExecuteChanged;
+    }
+
+    public class Help : ICommand
+    {
+        public void Execute(object parameter)
+        {
+            //help
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public event EventHandler CanExecuteChanged;
+    }
+
 
     public class MyDataContext
     {
@@ -269,6 +346,12 @@ namespace HelionEditor
         ICommand _newCommand = new New();
         ICommand _openCommand = new Open();
         ICommand _clearLayerCommand = new ClearLayer();
+        ICommand _prefCommand = new Preferences();
+        ICommand _brushToolCommand = new BrushTool();
+        ICommand _eraseToolCommand = new EraseTool();
+        ICommand _bucketToolCommand = new BucketTool();
+        ICommand _helpCommand = new Help();
+
 
         public ICommand Close
         {
@@ -297,6 +380,28 @@ namespace HelionEditor
         public ICommand ClearLayer
         {
             get { return _clearLayerCommand; }
+        }
+
+        public ICommand Preferences
+        {
+            get { return _prefCommand; }
+        }
+
+        public ICommand BrushTool
+        {
+            get { return _brushToolCommand; }
+        }
+        public ICommand EraseTool
+        {
+            get { return _eraseToolCommand; }
+        }
+        public ICommand BucketTool
+        {
+            get { return _bucketToolCommand; }
+        }
+        public ICommand Help
+        {
+            get { return _helpCommand; }
         }
     }
 }

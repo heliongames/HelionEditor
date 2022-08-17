@@ -26,9 +26,11 @@ namespace HelionEditor
         TilePalette palette;
         int layer;
         Tool tool = Tool.Brush;
-
-        public Editor(Canvas canvas, TilePalette palette, Slider layerSelector)
+        Label layersCounter;
+        public Editor(Canvas canvas, TilePalette palette, Slider layerSelector, Label layerCounter)
         {
+            layersCounter = layerCounter;
+            layersCounter.Content = "Layer : 1";
             this.palette = palette;
             this.canvas = canvas;
             emptyCell = DrawEmptyCell();
@@ -38,6 +40,7 @@ namespace HelionEditor
         private void LayerSelector_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             layer = (int)e.NewValue;
+            layersCounter.Content = "Layer : "+(int)(layer+1);
         }
 
         BitmapImage DrawEmptyCell()
