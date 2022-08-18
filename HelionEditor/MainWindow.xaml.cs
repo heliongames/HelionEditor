@@ -27,19 +27,39 @@ namespace HelionEditor
         public static bool saveStatus;
         static Editor editor;
 
-        
-
-        //Title="{Binding WindowTitle}";
-
-        //static Button buttonBrush = ButtonToolBrush;
+        static public MainWindow Instance;
+        bool initialized;
 
         public MainWindow()
         {
+            Instance = this;
             InitializeComponent();
             ClearSelectedTool();
             palette = new TilePalette(CanvasPalette, ImageSelectedTile).Initialize();
             DataContext = new MyDataContext();
             editor = new Editor(CanvasLevel, palette, SliderLayerSelector, LayersCounter);
+            LabelTileInfo.Content = $"[{0},{0}]";
+        }
+
+        private void InitializeWindow()
+        {
+            string pathToPreferencesData = System.AppDomain.CurrentDomain.BaseDirectory + "pref.json";
+            if (File.Exists(pathToPreferencesData))
+            {
+                var preferencesData = Newtonsoft.Json.JsonConvert.DeserializeObject<PreferencesData>(File.ReadAllText(pathToPreferencesData));
+                this.Top = preferencesData.top;
+                this.Left = preferencesData.left;
+                this.Width = preferencesData.width;
+                this.Height = preferencesData.height;
+            }
+            initialized = true;
+        }
+
+        private void SavePreferences()
+        {
+            string pathToPreferencesData = System.AppDomain.CurrentDomain.BaseDirectory + "pref.json";
+            var preferencesData = new PreferencesData(Width, Height, Top, Left);
+            File.WriteAllText(pathToPreferencesData, Newtonsoft.Json.JsonConvert.SerializeObject(preferencesData));
         }
 
         private void NewItem(object sender, RoutedEventArgs e)
@@ -92,20 +112,14 @@ namespace HelionEditor
         }
 
         public static void SaveFile()
-        {
-            if(fileName != "" && fileName != null)
+        {   
+            if(filePath != null)
             {
                 byte[] data = editor.level.ToByteArray();
-                SaveFileDialog fileDialog = new SaveFileDialog();
-                fileDialog.Filter = "csl files (*.csl)|*.csl";
-                fileDialog.DefaultExt = ".csl";
-                fileDialog.FileName = fileName;
-                if (fileDialog.ShowDialog() == true)
-                {
-                    File.WriteAllBytes(fileDialog.FileName, data);
-                    fileName = System.IO.Path.GetFileNameWithoutExtension(fileDialog.FileName);
-                }
+                File.WriteAllBytes(filePath, data);
+                return;
             }
+            SaveFileAs();
         }
 
         public static void SaveFileAs()
@@ -115,10 +129,11 @@ namespace HelionEditor
                 SaveFileDialog fileDialog = new SaveFileDialog();
                 fileDialog.Filter = "csl files (*.csl)|*.csl";
                 fileDialog.DefaultExt = ".csl";
-                fileDialog.FileName = fileName + "_copy";
+                fileDialog.FileName = fileName;
                 if (fileDialog.ShowDialog() == true)
                 {
                     File.WriteAllBytes(fileDialog.FileName, data);
+                    filePath = fileDialog.FileName;
                     fileName = System.IO.Path.GetFileNameWithoutExtension(fileDialog.FileName);
                 }
             }
@@ -131,6 +146,13 @@ namespace HelionEditor
 
         private void CanvasLevel_MouseMove(object sender, MouseEventArgs e)
         {
+            int tileX = (int)e.GetPosition(CanvasLevel).X / 32;
+            int tileY = (int)e.GetPosition(CanvasLevel).Y / 32;
+
+            if(editor.GetTile(tileX, tileY) == -1)
+                LabelTileInfo.Content = $"[{tileX},{tileY}]";
+            else
+                LabelTileInfo.Content = $"[{tileX},{tileY}] | ID:{editor.GetTile(tileX, tileY)}";
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 Draw(e.GetPosition(CanvasLevel));
@@ -153,21 +175,21 @@ namespace HelionEditor
         static SolidColorBrush button = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 255));
         SolidColorBrush selectedButtonColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 250, 150));
 
-        private void ButtonToolBrush_Click(object sender, RoutedEventArgs e)
+        public void ButtonToolBrush_Click(object sender, RoutedEventArgs e)
         {
             ClearSelectedTool();
             ButtonToolBrush.Background = selectedButtonColor;
             editor.ChangeTool(Tool.Brush);
         }
 
-        private void ButtonToolErase_Click(object sender, RoutedEventArgs e)
+        public void ButtonToolErase_Click(object sender, RoutedEventArgs e)
         {
             ClearSelectedTool();
             ButtonToolErase.Background = selectedButtonColor;
             editor.ChangeTool(Tool.Erase);
         }
 
-        private void ButtonToolBucket_Click(object sender, RoutedEventArgs e)
+        public void ButtonToolBucket_Click(object sender, RoutedEventArgs e)
         {
             ClearSelectedTool();
             ButtonToolBucket.Background = selectedButtonColor;
@@ -189,6 +211,26 @@ namespace HelionEditor
         private void ClearLayer(object sender, RoutedEventArgs e)
         {
             editor.ClearLayer();
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+           
+        }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Window_SourceInitialized(object sender, EventArgs e)
+        {
+            InitializeWindow();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            SavePreferences();
         }
     }
 
@@ -303,7 +345,7 @@ namespace HelionEditor
     {
         public void Execute(object parameter)
         {
-            //brush
+            MainWindow.Instance.ButtonToolBrush_Click(this,  new RoutedEventArgs());
         }
 
         public bool CanExecute(object parameter)
@@ -318,7 +360,7 @@ namespace HelionEditor
     {
         public void Execute(object parameter)
         {
-            //erase
+            MainWindow.Instance.ButtonToolErase_Click(this, new RoutedEventArgs());
         }
 
         public bool CanExecute(object parameter)
@@ -333,7 +375,7 @@ namespace HelionEditor
     {
         public void Execute(object parameter)
         {
-            //bucket
+            MainWindow.Instance.ButtonToolBucket_Click(this, new RoutedEventArgs());
         }
 
         public bool CanExecute(object parameter)

@@ -9,7 +9,7 @@
         Height="437" 
         Width="765" 
         MinWidth="500" 
-        MinHeight="300" Icon="logo.png">
+        MinHeight="300" Icon="logo.png" SizeChanged="Window_SizeChanged" Initialized="Window_Initialized" SourceInitialized="Window_SourceInitialized" Closing="Window_Closing">
     <Grid Background="#FF232323">
         <DockPanel>
             <Menu DockPanel.Dock="Top" Background="#FFF0F0F0">
@@ -76,7 +76,7 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Tools">
-                    <MenuItem Header="_Brush" Cursor="Hand" InputGestureText="B">
+                    <MenuItem Header="_Brush" Cursor="Hand" InputGestureText="B" Click="ButtonToolBrush_Click">
                         <MenuItem.ToolTip>
                             <ToolTip>Paint brush tool.</ToolTip>
                         </MenuItem.ToolTip>
@@ -84,7 +84,7 @@
                             <Image Source="brush.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_Erase" Cursor="Hand" InputGestureText="E">
+                    <MenuItem Header="_Erase" Cursor="Hand" InputGestureText="E" Click="ButtonToolErase_Click">
                         <MenuItem.ToolTip>
                             <ToolTip>Eraser tool.</ToolTip>
                         </MenuItem.ToolTip>
@@ -92,7 +92,7 @@
                             <Image Source="Resources/ers.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_Bucket" Cursor="Hand" InputGestureText="R">
+                    <MenuItem Header="_Bucket" Cursor="Hand" InputGestureText="R" Click="ButtonToolBucket_Click">
                         <MenuItem.ToolTip>
                             <ToolTip>Bucket tool.</ToolTip>
                         </MenuItem.ToolTip>
@@ -123,7 +123,7 @@
             </ScrollViewer>
         </Border>
         <Canvas x:Name="CanvasBackground" Margin="221,18,0,0" Background="#FF424242"/>
-        <Label Content="X:200 Y:147 'empty'" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom" Width="221" Foreground="White" HorizontalContentAlignment="Center"/>
+        <Label x:Name="LabelTileInfo" Content="X:200 Y:147 'empty'" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom" Width="221" Foreground="White" HorizontalContentAlignment="Center"/>
         <TextBox Height="23" TextWrapping="Wrap" Text="24" Canvas.Top="236" Width="23" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="126,0,0,126" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <TextBox Height="23" TextWrapping="Wrap" Text="16" Canvas.Top="236" Width="23" Canvas.Left="92" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="79,0,0,126" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <Button x:Name="ButtonToolBrush" HorizontalAlignment="Left" Margin="10,0,0,76" VerticalAlignment="Bottom" Width="40" Height="40" Click="ButtonToolBrush_Click" Background="#FF00FA96">
@@ -160,7 +160,7 @@
         <KeyBinding Command="{Binding ClearLayer}" Key="X" Modifiers="Ctrl"/>
         <KeyBinding Command="{Binding Preferences}" Key="P" Modifiers="Ctrl"/>
         <KeyBinding Command="{Binding BrushTool}" Key="B"/>
-        <KeyBinding Command="{Binding EreaseTool}" Key="E"/>
+        <KeyBinding Command="{Binding EraseTool}" Key="E"/>
         <KeyBinding Command="{Binding BucketTool}" Key="R"/>
         <KeyBinding Command="{Binding Help}" Key="H"/>
     </Window.InputBindings>

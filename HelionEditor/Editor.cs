@@ -117,8 +117,8 @@ namespace HelionEditor
             int touchedID = level.levelLayers[layer].cells[X, Y];
             Queue<System.Drawing.Point> checkList = new Queue<System.Drawing.Point>();
             bool[,] checkedList = new bool[level.width, level.height];
-            List<System.Drawing.Point> paintList = new List<System.Drawing.Point>();
-            paintList.Add(new System.Drawing.Point(X, Y));
+            UseBrush(X, Y);
+
             foreach (var neighbor in GetNeighbors(X, Y))
             {
                 checkList.Enqueue(neighbor);
@@ -129,7 +129,7 @@ namespace HelionEditor
                 checkedList[neighbor.X, neighbor.Y] = true;
                 if (level.levelLayers[layer].cells[neighbor.X,neighbor.Y] == touchedID)
                 {
-                    paintList.Add(neighbor);
+                    UseBrush(neighbor.X, neighbor.Y);
                     foreach (var nbr in GetNeighbors(neighbor.X, neighbor.Y))
                     {
                         if (!checkedList[nbr.X, nbr.Y])
@@ -138,10 +138,6 @@ namespace HelionEditor
                         }
                     }
                 }
-            }
-            foreach (var point in paintList)
-            {
-                UseBrush(point.X, point.Y);
             }
         }
 
@@ -199,6 +195,11 @@ namespace HelionEditor
 
             canvas.Width = width * 32;
             canvas.Height = height * 32;
+        }
+
+        public int GetTile(int X, int Y)
+        {
+            return level.levelLayers[layer].cells[X, Y];
         }
     }
 }

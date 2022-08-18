@@ -52,3 +52,6 @@ C:\Unity\HelionEditor\HelionEditor\obj\Debug\HelionEditor.csproj.GenerateResourc
 C:\Unity\HelionEditor\HelionEditor\obj\Debug\HelionEditor.csproj.CoreCompileInputs.cache
 C:\Unity\HelionEditor\HelionEditor\obj\Debug\HelionEditor.exe
 C:\Unity\HelionEditor\HelionEditor\obj\Debug\HelionEditor.pdb
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Debug\HelionEditor.csproj.CopyComplete
