@@ -5,7 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HelionEditor"
         mc:Ignorable="d"
-        Title="HGL Editor" Height="437" Width="765" MinWidth="500" MinHeight="300" Icon="logo.png">
+        Title="HGL Editor" 
+        Height="437" 
+        Width="765" 
+        MinWidth="500" 
+        MinHeight="300" Icon="logo.png">
     <Grid Background="#FF232323">
         <DockPanel>
             <Menu DockPanel.Dock="Top" Background="#FFF0F0F0">

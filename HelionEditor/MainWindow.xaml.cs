@@ -27,6 +27,10 @@ namespace HelionEditor
         public static bool saveStatus;
         static Editor editor;
 
+        
+
+        //Title="{Binding WindowTitle}";
+
         //static Button buttonBrush = ButtonToolBrush;
 
         public MainWindow()
@@ -41,6 +45,8 @@ namespace HelionEditor
         private void NewItem(object sender, RoutedEventArgs e)
         {
             NewFile();
+            fileName = "unnamed";
+            this.Title = $"HGL Editor [{fileName}.csl]*";
         }
 
         private void OpenItem(object sender, RoutedEventArgs e)
@@ -51,11 +57,13 @@ namespace HelionEditor
         private void SaveItem(object sender, RoutedEventArgs e)
         {
             SaveFile();
+            this.Title = $"HGL Editor [{fileName}.csl]";
         }
 
         private void SaveAs(object sender, RoutedEventArgs e)
         {
             SaveFileAs();
+            this.Title = $"HGL Editor [{fileName}.csl]";
         }
 
         public static void NewFile()
@@ -87,6 +95,7 @@ namespace HelionEditor
                 File.WriteAllBytes(fileDialog.FileName, data);
                 fileName = System.IO.Path.GetFileNameWithoutExtension(fileDialog.FileName);
             }
+                
         }
 
         public static void SaveFileAs()
