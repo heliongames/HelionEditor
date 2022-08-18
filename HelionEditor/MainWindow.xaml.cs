@@ -85,30 +85,35 @@ namespace HelionEditor
 
         public static void SaveFile()
         {
-            byte[] data = editor.level.ToByteArray();
-            SaveFileDialog fileDialog = new SaveFileDialog();
-            fileDialog.Filter = "csl files (*.csl)|*.csl";
-            fileDialog.DefaultExt = ".csl";
-            fileDialog.FileName = fileName;
-            if (fileDialog.ShowDialog() == true)
+            if(fileName != "" && fileName != null)
             {
-                File.WriteAllBytes(fileDialog.FileName, data);
-                fileName = System.IO.Path.GetFileNameWithoutExtension(fileDialog.FileName);
+                byte[] data = editor.level.ToByteArray();
+                SaveFileDialog fileDialog = new SaveFileDialog();
+                fileDialog.Filter = "csl files (*.csl)|*.csl";
+                fileDialog.DefaultExt = ".csl";
+                fileDialog.FileName = fileName;
+                if (fileDialog.ShowDialog() == true)
+                {
+                    File.WriteAllBytes(fileDialog.FileName, data);
+                    fileName = System.IO.Path.GetFileNameWithoutExtension(fileDialog.FileName);
+                }
             }
                 
         }
 
         public static void SaveFileAs()
         {
-            byte[] data = editor.level.ToByteArray();
-            SaveFileDialog fileDialog = new SaveFileDialog();
-            fileDialog.Filter = "csl files (*.csl)|*.csl";
-            fileDialog.DefaultExt = ".csl";
-            fileDialog.FileName = fileName + "_copy";
-            if (fileDialog.ShowDialog() == true)
-            {
-                File.WriteAllBytes(fileDialog.FileName, data);
-                fileName = System.IO.Path.GetFileNameWithoutExtension(fileDialog.FileName);
+            if (fileName != "" && fileName != null) { 
+                byte[] data = editor.level.ToByteArray();
+                SaveFileDialog fileDialog = new SaveFileDialog();
+                fileDialog.Filter = "csl files (*.csl)|*.csl";
+                fileDialog.DefaultExt = ".csl";
+                fileDialog.FileName = fileName + "_copy";
+                if (fileDialog.ShowDialog() == true)
+                {
+                    File.WriteAllBytes(fileDialog.FileName, data);
+                    fileName = System.IO.Path.GetFileNameWithoutExtension(fileDialog.FileName);
+                }
             }
         }
 
