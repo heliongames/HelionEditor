@@ -100,7 +100,7 @@ namespace HelionEditor
 
         void UseBrush(int X, int Y)
         {
-            if (level.SetTile(layer, X, Y, palette.selectedID))
+            if (palette.selectedID >= 0 && level.SetTile(layer, X, Y, palette.selectedID))
                 ((System.Windows.Controls.Image)canvas.Children[layer * level.width * level.height + Y * level.width + X]).Source = palette.tiles[level.levelLayers[layer].cells[X, Y]];
         }
         void UseErase(int X, int Y)
@@ -199,7 +199,10 @@ namespace HelionEditor
 
         public int GetTile(int X, int Y)
         {
-            return level.levelLayers[layer].cells[X, Y];
+            if (X >= 0 && Y >= 0 && X < level.width && Y < level.height && level != null)
+                return level.levelLayers[layer].cells[X, Y];
+            else
+                return -1;
         }
     }
 }

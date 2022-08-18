@@ -39,6 +39,8 @@ namespace HelionEditor
             DataContext = new MyDataContext();
             editor = new Editor(CanvasLevel, palette, SliderLayerSelector, LayersCounter);
             LabelTileInfo.Content = $"[{0},{0}]";
+
+            //Environment.GetCommandLineArgs()
         }
 
         private void InitializeWindow()
