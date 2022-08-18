@@ -52,18 +52,25 @@ namespace HelionEditor
         private void OpenItem(object sender, RoutedEventArgs e)
         {
             OpenFile();
+            this.Title = $"HGL Editor [{fileName}.csl]";
         }
 
         private void SaveItem(object sender, RoutedEventArgs e)
         {
             SaveFile();
-            this.Title = $"HGL Editor [{fileName}.csl]";
+            if (fileName != "" && fileName != null)
+                this.Title = $"HGL Editor [{fileName}.csl]";
+            else
+                this.Title = $"HGL Editor";
         }
 
         private void SaveAs(object sender, RoutedEventArgs e)
         {
             SaveFileAs();
-            this.Title = $"HGL Editor [{fileName}.csl]";
+            if (fileName != "" && fileName != null)
+                this.Title = $"HGL Editor [{fileName}.csl]";
+            else
+                this.Title = $"HGL Editor";
         }
 
         public static void NewFile()
@@ -78,6 +85,7 @@ namespace HelionEditor
             if (filedialog.ShowDialog() == true)
             {
                 filePath = filedialog.FileName;
+                fileName = System.IO.Path.GetFileNameWithoutExtension(filedialog.FileName);
                 byte[] data = File.ReadAllBytes(filePath);
                 editor.Init(GameLevel.FromByteArray(data));
             }
@@ -98,7 +106,6 @@ namespace HelionEditor
                     fileName = System.IO.Path.GetFileNameWithoutExtension(fileDialog.FileName);
                 }
             }
-                
         }
 
         public static void SaveFileAs()
@@ -140,6 +147,7 @@ namespace HelionEditor
             int tileX = (int)mousePosition.X / 32;
             int tileY = (int)mousePosition.Y / 32;
             editor.UpdateTile(tileX, tileY);
+            this.Title = $"HGL Editor [{fileName}.csl]*";
         }
 
         static SolidColorBrush button = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 255));
