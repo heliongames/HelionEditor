@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace HelionEditor
 {
@@ -26,9 +28,9 @@ namespace HelionEditor
 
         public static bool saveStatus;
         static Editor editor;
+        static List<string> recentFiles;
 
         static public MainWindow Instance;
-        bool initialized;
 
         public MainWindow()
         {
@@ -45,22 +47,48 @@ namespace HelionEditor
 
         private void InitializeWindow()
         {
-            string pathToPreferencesData = System.AppDomain.CurrentDomain.BaseDirectory + "pref.json";
+            GridPreferences.Visibility = Visibility.Collapsed;
+            string pathToPreferencesData = AppDomain.CurrentDomain.BaseDirectory + "pref.json";
             if (File.Exists(pathToPreferencesData))
             {
                 var preferencesData = Newtonsoft.Json.JsonConvert.DeserializeObject<PreferencesData>(File.ReadAllText(pathToPreferencesData));
-                this.Top = preferencesData.top;
-                this.Left = preferencesData.left;
-                this.Width = preferencesData.width;
-                this.Height = preferencesData.height;
+                recentFiles = preferencesData.recentFiles != null ? preferencesData.recentFiles : new List<string>();
+                InitializeRecentFiles();
+                Top = preferencesData.top;
+                Left = preferencesData.left;
+                Width = preferencesData.width;
+                Height = preferencesData.height;
             }
-            initialized = true;
+        }
+
+        private void InitializeRecentFiles()
+        {
+            while (recentFiles.Count > 10)
+                recentFiles.RemoveAt(0);
+            MenuItemRecentFiles.Items.Clear();
+            for (int i = recentFiles.Count - 1; i >= 0; i--)
+            {
+                var file = recentFiles[i];
+                MenuItem item = new MenuItem();
+                item.Header = file;
+                item.Click += (object sender, RoutedEventArgs e) =>
+                {
+                    filePath = ((MenuItem)sender).Header.ToString();
+                    fileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
+                    byte[] data = File.ReadAllBytes(filePath);
+                    editor.Init(GameLevel.FromByteArray(data));
+                    recentFiles.Add(filePath);
+                    Instance.InitializeRecentFiles();
+                    Instance.SavePreferences();
+                };
+                MenuItemRecentFiles.Items.Add(item);
+            }
         }
 
         private void SavePreferences()
         {
-            string pathToPreferencesData = System.AppDomain.CurrentDomain.BaseDirectory + "pref.json";
-            var preferencesData = new PreferencesData(Width, Height, Top, Left);
+            string pathToPreferencesData = AppDomain.CurrentDomain.BaseDirectory + "pref.json";
+            var preferencesData = new PreferencesData(Width, Height, Top, Left, recentFiles);
             File.WriteAllText(pathToPreferencesData, Newtonsoft.Json.JsonConvert.SerializeObject(preferencesData));
         }
 
@@ -97,7 +125,7 @@ namespace HelionEditor
 
         public static void NewFile()
         {
-            editor.Init(new GameLevel(16, 16));
+            editor.Init(new GameLevel(int.Parse(Instance.TextboxWidth.Text), int.Parse(Instance.TextboxHeight.Text)));
         }
 
         public static void OpenFile()
@@ -110,6 +138,9 @@ namespace HelionEditor
                 fileName = System.IO.Path.GetFileNameWithoutExtension(filedialog.FileName);
                 byte[] data = File.ReadAllBytes(filePath);
                 editor.Init(GameLevel.FromByteArray(data));
+                recentFiles.Add(filePath);
+                Instance.InitializeRecentFiles();
+                Instance.SavePreferences();
             }
         }
 
@@ -137,6 +168,9 @@ namespace HelionEditor
                     File.WriteAllBytes(fileDialog.FileName, data);
                     filePath = fileDialog.FileName;
                     fileName = System.IO.Path.GetFileNameWithoutExtension(fileDialog.FileName);
+                    recentFiles.Add(filePath);
+                    Instance.InitializeRecentFiles();
+                    Instance.SavePreferences();
                 }
             }
         }
@@ -233,6 +267,47 @@ namespace HelionEditor
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             SavePreferences();
+        }
+
+        private new void PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            if (e.Text == "\r")
+            {
+                int w = Clamp(int.Parse(TextboxWidth.Text), 1, 128);
+                int h = Clamp(int.Parse(TextboxHeight.Text), 1, 128);
+                TextboxWidth.Text = w.ToString();
+                TextboxHeight.Text = h.ToString();
+                e.Handled = false;
+                editor.SetSize(int.Parse(TextboxWidth.Text), int.Parse(TextboxHeight.Text));
+                CanvasBackground.Focus();
+            }
+            else
+                e.Handled = regex.IsMatch(e.Text);
+        }
+
+        int Clamp(int value, int min, int max)
+        {
+            if (value < min)
+                return min;
+            if (value > max)
+                return max;
+            return value;
+        }
+
+        private void ChoosePathToTiles(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ClosePreferences(object sender, MouseButtonEventArgs e)
+        {
+            GridPreferences.Visibility = Visibility.Collapsed;
+        }
+
+        public void OpenPreferences(object sender, RoutedEventArgs e)
+        {
+            GridPreferences.Visibility = Visibility.Visible;
         }
     }
 
@@ -332,7 +407,7 @@ namespace HelionEditor
     {
         public void Execute(object parameter)
         {
-            //Pref
+            MainWindow.Instance.OpenPreferences(null, null);
         }
 
         public bool CanExecute(object parameter)

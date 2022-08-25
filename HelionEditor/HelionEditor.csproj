@@ -162,5 +162,8 @@
   <ItemGroup>
     <Resource Include="Resources\paint-bucket.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\close.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

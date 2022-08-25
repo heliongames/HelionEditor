@@ -19,11 +19,30 @@ namespace HelionEditor
         {
             this.width = width;
             this.height = height;
-            levelLayers = new LevelLayer[6];
+            levelLayers = new LevelLayer[5];
             for (int i = 0; i < levelLayers.Length; i++)
             {
                 levelLayers[i] = new LevelLayer(width, height);
             }
+        }
+
+        public void SetSize(int width, int height)
+        {
+            LevelLayer[] newLevelLayers = new LevelLayer[5];
+            for (int i = 0; i < 5; i++)
+            {
+                newLevelLayers[i] = new LevelLayer(width, height);
+                for (int x = 0; x < Math.Min(width,this.width); x++)
+                {
+                    for (int y = 0; y < Math.Min(height, this.height); y++)
+                    {
+                        newLevelLayers[i].cells[x, y] = levelLayers[i].cells[x, y];
+                    }
+                }
+            }
+            levelLayers = newLevelLayers;
+            this.width = width;
+            this.height = height;
         }
 
         public bool SetTile(int layer, int X, int Y, int ID)

@@ -76,6 +76,14 @@ namespace HelionEditor
             UpdateCanvas(level.width, level.height, level.levelLayers);
         }
 
+        public void SetSize(int width, int height)
+        {
+            if (level == null || (level.width == width && level.height == height))
+                return;
+            level.SetSize(width, height);
+            Init(level);
+        }
+
         public void ChangeTool(Tool tool)
         {
             this.tool = tool;
@@ -103,6 +111,7 @@ namespace HelionEditor
             if (palette.selectedID >= 0 && level.SetTile(layer, X, Y, palette.selectedID))
                 ((System.Windows.Controls.Image)canvas.Children[layer * level.width * level.height + Y * level.width + X]).Source = palette.tiles[level.levelLayers[layer].cells[X, Y]];
         }
+
         void UseErase(int X, int Y)
         {
             level.SetTile(layer, X, Y, -1);

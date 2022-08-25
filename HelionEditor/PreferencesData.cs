@@ -13,13 +13,15 @@ namespace HelionEditor
         public double height;
         public double top;
         public double left;
+        public List<string> recentFiles;
 
-        public PreferencesData(double width, double height, double top, double left)
+        public PreferencesData(double width, double height, double top, double left, List<string> recentFiles)
         {
             this.width = width;
             this.height = height;
             this.top = top;
             this.left = left;
+            this.recentFiles = recentFiles;
         }
     }
 }

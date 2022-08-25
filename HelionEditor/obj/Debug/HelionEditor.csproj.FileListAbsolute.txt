@@ -55,3 +55,6 @@ C:\Unity\HelionEditor\HelionEditor\obj\Debug\HelionEditor.pdb
 C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Debug\HelionEditor.csproj.CopyComplete
+D:\Projects\С#\HelionEditor\HelionEditor\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\С#\HelionEditor\HelionEditor\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\С#\HelionEditor\HelionEditor\obj\Debug\HelionEditor.csproj.CopyComplete
