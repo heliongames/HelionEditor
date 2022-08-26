@@ -38,7 +38,6 @@ namespace HelionEditor
             InitializeComponent();
             ClearSelectedTool();
             DataContext = new MyDataContext();
-            editor = new Editor(CanvasLevel, palette, SliderLayerSelector, LayersCounter);
             LabelTileInfo.Content = $"[{0},{0}]";
 
             //Environment.GetCommandLineArgs()
@@ -55,6 +54,7 @@ namespace HelionEditor
                 if (preferencesData.pathToTiles == null)
                     preferencesData.pathToTiles = AppDomain.CurrentDomain.BaseDirectory + "Tiles";
                 palette = new TilePalette(CanvasPalette, ImageSelectedTile, preferencesData.pathToTiles).Initialize();
+                editor = new Editor(CanvasLevel, palette, SliderLayerSelector, LayersCounter);
                 LabelPathToTiles.Content = preferencesData.pathToTiles;
                 InitializeRecentFiles();
                 Top = preferencesData.top;
