@@ -58,3 +58,8 @@ C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Debug\HelionEditor.cspr
 D:\Projects\С#\HelionEditor\HelionEditor\bin\Debug\Newtonsoft.Json.dll
 D:\Projects\С#\HelionEditor\HelionEditor\bin\Debug\Newtonsoft.Json.xml
 D:\Projects\С#\HelionEditor\HelionEditor\obj\Debug\HelionEditor.csproj.CopyComplete
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Debug\Microsoft.WindowsAPICodePack.dll
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Debug\Microsoft.WindowsAPICodePack.ExtendedLinguisticServices.dll
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Debug\Microsoft.WindowsAPICodePack.Sensors.dll
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Debug\Microsoft.WindowsAPICodePack.ShellExtensions.dll
