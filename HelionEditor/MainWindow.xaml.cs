@@ -37,7 +37,6 @@ namespace HelionEditor
             Instance = this;
             InitializeComponent();
             ClearSelectedTool();
-            palette = new TilePalette(CanvasPalette, ImageSelectedTile).Initialize();
             DataContext = new MyDataContext();
             editor = new Editor(CanvasLevel, palette, SliderLayerSelector, LayersCounter);
             LabelTileInfo.Content = $"[{0},{0}]";
@@ -53,6 +52,10 @@ namespace HelionEditor
             {
                 var preferencesData = Newtonsoft.Json.JsonConvert.DeserializeObject<PreferencesData>(File.ReadAllText(pathToPreferencesData));
                 recentFiles = preferencesData.recentFiles != null ? preferencesData.recentFiles : new List<string>();
+                if (preferencesData.pathToTiles == null)
+                    preferencesData.pathToTiles = AppDomain.CurrentDomain.BaseDirectory + "Tiles";
+                palette = new TilePalette(CanvasPalette, ImageSelectedTile, preferencesData.pathToTiles).Initialize();
+                LabelPathToTiles.Content = preferencesData.pathToTiles;
                 InitializeRecentFiles();
                 Top = preferencesData.top;
                 Left = preferencesData.left;
@@ -88,7 +91,7 @@ namespace HelionEditor
         private void SavePreferences()
         {
             string pathToPreferencesData = AppDomain.CurrentDomain.BaseDirectory + "pref.json";
-            var preferencesData = new PreferencesData(Width, Height, Top, Left, recentFiles);
+            var preferencesData = new PreferencesData(Width, Height, Top, Left, recentFiles, palette.pathToTiles);
             File.WriteAllText(pathToPreferencesData, Newtonsoft.Json.JsonConvert.SerializeObject(preferencesData));
         }
 
@@ -297,7 +300,19 @@ namespace HelionEditor
 
         private void ChoosePathToTiles(object sender, RoutedEventArgs e)
         {
-
+            var dlg = new CommonOpenFileDialog();
+            dlg.Title = "My Title";
+            dlg.IsFolderPicker = true;
+            dlg.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                var folder = dlg.FileName;
+                palette.pathToTiles = folder;
+                palette.Initialize();
+                SavePreferences();
+                LabelPathToTiles.Content = folder;
+                Console.WriteLine(folder);
+            }
         }
 
         private void ClosePreferences(object sender, MouseButtonEventArgs e)

@@ -15,7 +15,7 @@ namespace HelionEditor
     {
         Canvas canvas;
         System.Windows.Controls.Image selectedImage;
-
+        public string pathToTiles;
         public List<BitmapImage> tiles = new List<BitmapImage>();
 
         public int selectedID = -1;
@@ -23,10 +23,11 @@ namespace HelionEditor
         System.Windows.Media.SolidColorBrush frameColor = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(200, 200, 200));
         System.Windows.Media.SolidColorBrush selectedFrameColor = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(20, 220, 20));
 
-        public TilePalette(Canvas canvas, System.Windows.Controls.Image selectedImage)
+        public TilePalette(Canvas canvas, System.Windows.Controls.Image selectedImage, string pathToTiles)
         {
             this.canvas = canvas;
             this.selectedImage = selectedImage;
+            this.pathToTiles = pathToTiles;
             canvas.MouseDown += Canvas_MouseDown;
         }
 
@@ -47,11 +48,12 @@ namespace HelionEditor
 
         public TilePalette Initialize()
         {
-            var pathToTiles = AppDomain.CurrentDomain.BaseDirectory + "Tiles";
             if (Directory.Exists(pathToTiles))
             {
                 int currentID = 0;
                 string[] tilesets = Directory.GetFiles(pathToTiles);
+                tiles.Clear();
+                canvas.Children.Clear();
                 for (int i = 0; i < tilesets.Length; i++)
                 {
                     Bitmap tileset = (Bitmap)Bitmap.FromFile(tilesets[i]);
