@@ -103,7 +103,7 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Help">
-                    <MenuItem Header="_Help" Cursor="Hand" InputGestureText="Ctrl+H">
+                    <MenuItem Header="_Help" Cursor="Hand" InputGestureText="H" Click="Help">
                         <MenuItem.ToolTip>
                             <ToolTip>Display help.</ToolTip>
                         </MenuItem.ToolTip>
@@ -146,7 +146,7 @@
         </ScrollViewer>
         <Image x:Name="ImageSelectedTile" HorizontalAlignment="Left" Height="40" Margin="166,0,0,76" VerticalAlignment="Bottom" Width="40"/>
 
-        <Grid x:Name="GridPreferences" Margin="10,28,10,10" Background="#FF171717">
+        <Grid x:Name="GridPreferences" Margin="10,28,10,10" Background="#FF171717" Panel.ZIndex="5">
             <Image HorizontalAlignment="Right" Height="24" Margin="0,8,8,0" VerticalAlignment="Top" Width="24" Source="Resources/close.png" MouseUp="ClosePreferences" Cursor="Hand"/>
             <Label Content="Path to tiles folder" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="300" Foreground="White"/>
             <Label x:Name="LabelPathToTiles" Content="C:/Documents/project/..." HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="300" Foreground="White" FontSize="16" BorderBrush="White" BorderThickness="1"/>

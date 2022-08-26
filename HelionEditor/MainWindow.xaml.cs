@@ -309,6 +309,16 @@ namespace HelionEditor
         {
             GridPreferences.Visibility = Visibility.Visible;
         }
+
+        public void Help(object sender, RoutedEventArgs e)
+        {
+            var destinationurl = "http://helion.games/hgl/";
+            var sInfo = new System.Diagnostics.ProcessStartInfo(destinationurl)
+            {
+                UseShellExecute = true,
+            };
+            System.Diagnostics.Process.Start(sInfo);
+        }
     }
 
 
@@ -467,7 +477,7 @@ namespace HelionEditor
     {
         public void Execute(object parameter)
         {
-            //help
+            MainWindow.Instance.Help(null, null);
         }
 
         public bool CanExecute(object parameter)
