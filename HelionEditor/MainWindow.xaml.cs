@@ -23,10 +23,10 @@ namespace HelionEditor
     public partial class MainWindow : Window
     {
         TilePalette palette;
-        static public string fileName;
-        static public string filePath;
+        static public string FileName;
+        static public string FilePath;
 
-        public static bool saveStatus;
+        public static bool SaveStatus;
         static Editor editor;
         static List<string> recentFiles;
 
@@ -39,28 +39,47 @@ namespace HelionEditor
             ClearSelectedTool();
             DataContext = new MyDataContext();
             LabelTileInfo.Content = $"[{0},{0}]";
-
-            //Environment.GetCommandLineArgs()
         }
 
         private void InitializeWindow()
         {
+            double top = 0;
+            double left = 0;
+            double width = 0;
+            double height = 0;
+
+            string[] args = Environment.GetCommandLineArgs();
+
+            for (int i = 1; i < args.Length; i++)
+            {
+                if (args[i] == "-t")
+                    top = double.Parse(args[i + 1]);
+                if (args[i] == "-l")
+                    left = double.Parse(args[i + 1]);
+                if (args[i] == "-w")
+                    width = double.Parse(args[i + 1]);
+                if (args[i] == "-h")
+                    height = double.Parse(args[i + 1]);
+            }
+
+            Console.WriteLine($"Top: [{top}]|Left: [{left}]|Width: [{width}]|Height: [{height}]");
+
             GridPreferences.Visibility = Visibility.Collapsed;
             string pathToPreferencesData = AppDomain.CurrentDomain.BaseDirectory + "pref.json";
             if (File.Exists(pathToPreferencesData))
             {
                 var preferencesData = Newtonsoft.Json.JsonConvert.DeserializeObject<PreferencesData>(File.ReadAllText(pathToPreferencesData));
-                recentFiles = preferencesData.recentFiles != null ? preferencesData.recentFiles : new List<string>();
-                if (preferencesData.pathToTiles == null)
-                    preferencesData.pathToTiles = AppDomain.CurrentDomain.BaseDirectory + "Tiles";
-                palette = new TilePalette(CanvasPalette, ImageSelectedTile, preferencesData.pathToTiles).Initialize();
+                recentFiles = preferencesData.RecentFiles != null ? preferencesData.RecentFiles : new List<string>();
+                if (preferencesData.PathToTiles == null)
+                    preferencesData.PathToTiles = AppDomain.CurrentDomain.BaseDirectory + "Tiles";
+                palette = new TilePalette(CanvasPalette, ImageSelectedTile, preferencesData.PathToTiles).Initialize();
                 editor = new Editor(CanvasLevel, palette, SliderLayerSelector, LayersCounter);
-                LabelPathToTiles.Content = preferencesData.pathToTiles;
+                LabelPathToTiles.Content = preferencesData.PathToTiles;
                 InitializeRecentFiles();
-                Top = preferencesData.top;
-                Left = preferencesData.left;
-                Width = preferencesData.width;
-                Height = preferencesData.height;
+                Top = top != 0 ? top : preferencesData.Top;
+                Left = left != 0 ? left : preferencesData.Left;
+                Width = width != 0 ? width : preferencesData.Width;
+                Height = height != 0 ? height : preferencesData.Height;
             }
         }
 
@@ -76,11 +95,11 @@ namespace HelionEditor
                 item.Header = file;
                 item.Click += (object sender, RoutedEventArgs e) =>
                 {
-                    filePath = ((MenuItem)sender).Header.ToString();
-                    fileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
-                    byte[] data = File.ReadAllBytes(filePath);
+                    FilePath = ((MenuItem)sender).Header.ToString();
+                    FileName = System.IO.Path.GetFileNameWithoutExtension(FilePath);
+                    byte[] data = File.ReadAllBytes(FilePath);
                     editor.Init(GameLevel.FromByteArray(data));
-                    recentFiles.Add(filePath);
+                    recentFiles.Add(FilePath);
                     Instance.InitializeRecentFiles();
                     Instance.SavePreferences();
                 };
@@ -91,39 +110,39 @@ namespace HelionEditor
         private void SavePreferences()
         {
             string pathToPreferencesData = AppDomain.CurrentDomain.BaseDirectory + "pref.json";
-            var preferencesData = new PreferencesData(Width, Height, Top, Left, recentFiles, palette.pathToTiles);
+            var preferencesData = new PreferencesData(Width, Height, Top, Left, recentFiles, palette.PathToTiles);
             File.WriteAllText(pathToPreferencesData, Newtonsoft.Json.JsonConvert.SerializeObject(preferencesData));
         }
 
         private void NewItem(object sender, RoutedEventArgs e)
         {
             NewFile();
-            fileName = "unnamed";
-            this.Title = $"HGL Editor [{fileName}.csl]*";
+            FileName = "unnamed";
+            SaveStatus = false;
+            this.Title = $"HGL Editor [{FileName}.csl]*";
         }
 
         private void OpenItem(object sender, RoutedEventArgs e)
         {
             OpenFile();
-            this.Title = $"HGL Editor [{fileName}.csl]";
+            SaveStatus = false;
+            this.Title = $"HGL Editor [{FileName}.csl]";
         }
 
-        private void SaveItem(object sender, RoutedEventArgs e)
+        public void SaveItem(object sender, RoutedEventArgs e)
         {
             SaveFile();
-            if (fileName != "" && fileName != null)
-                this.Title = $"HGL Editor [{fileName}.csl]";
-            else
-                this.Title = $"HGL Editor";
+            SaveStatus = true;
+            if (FileName != "" && FileName != null)
+                this.Title = $"HGL Editor [{FileName}.csl]";
         }
 
-        private void SaveAs(object sender, RoutedEventArgs e)
+        public void SaveAs(object sender, RoutedEventArgs e)
         {
             SaveFileAs();
-            if (fileName != "" && fileName != null)
-                this.Title = $"HGL Editor [{fileName}.csl]";
-            else
-                this.Title = $"HGL Editor";
+            SaveStatus = true;
+            if (FileName != "" && FileName != null)
+                this.Title = $"HGL Editor [{FileName}.csl]";
         }
 
         public static void NewFile()
@@ -137,22 +156,22 @@ namespace HelionEditor
             filedialog.Filter = "csl files (*.csl)|*.csl|All files (*.*)|*.*";
             if (filedialog.ShowDialog() == true)
             {
-                filePath = filedialog.FileName;
-                fileName = System.IO.Path.GetFileNameWithoutExtension(filedialog.FileName);
-                byte[] data = File.ReadAllBytes(filePath);
+                FilePath = filedialog.FileName;
+                FileName = System.IO.Path.GetFileNameWithoutExtension(filedialog.FileName);
+                byte[] data = File.ReadAllBytes(FilePath);
                 editor.Init(GameLevel.FromByteArray(data));
-                recentFiles.Add(filePath);
+                recentFiles.Add(FilePath);
                 Instance.InitializeRecentFiles();
                 Instance.SavePreferences();
             }
         }
 
         public static void SaveFile()
-        {   
-            if(filePath != null)
+        {
+            if(FilePath != null)
             {
-                byte[] data = editor.level.ToByteArray();
-                File.WriteAllBytes(filePath, data);
+                byte[] data = editor.Level.ToByteArray();
+                File.WriteAllBytes(FilePath, data);
                 return;
             }
             SaveFileAs();
@@ -160,18 +179,18 @@ namespace HelionEditor
 
         public static void SaveFileAs()
         {
-            if (fileName != "" && fileName != null) { 
-                byte[] data = editor.level.ToByteArray();
+            if (FileName != "" && FileName != null) { 
+                byte[] data = editor.Level.ToByteArray();
                 SaveFileDialog fileDialog = new SaveFileDialog();
                 fileDialog.Filter = "csl files (*.csl)|*.csl";
                 fileDialog.DefaultExt = ".csl";
-                fileDialog.FileName = fileName;
+                fileDialog.FileName = FileName;
                 if (fileDialog.ShowDialog() == true)
                 {
                     File.WriteAllBytes(fileDialog.FileName, data);
-                    filePath = fileDialog.FileName;
-                    fileName = System.IO.Path.GetFileNameWithoutExtension(fileDialog.FileName);
-                    recentFiles.Add(filePath);
+                    FilePath = fileDialog.FileName;
+                    FileName = System.IO.Path.GetFileNameWithoutExtension(fileDialog.FileName);
+                    recentFiles.Add(FilePath);
                     Instance.InitializeRecentFiles();
                     Instance.SavePreferences();
                 }
@@ -201,6 +220,7 @@ namespace HelionEditor
         private void CanvasLevel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Draw(e.GetPosition(CanvasLevel));
+            SaveStatus = false;
         }
 
         void Draw(System.Windows.Point mousePosition)
@@ -208,7 +228,8 @@ namespace HelionEditor
             int tileX = (int)mousePosition.X / 32;
             int tileY = (int)mousePosition.Y / 32;
             editor.UpdateTile(tileX, tileY);
-            this.Title = $"HGL Editor [{fileName}.csl]*";
+            if(!SaveStatus)
+                this.Title = $"HGL Editor [{FileName}.csl]*";
         }
 
         static SolidColorBrush button = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 255));
@@ -307,7 +328,7 @@ namespace HelionEditor
             if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 var folder = dlg.FileName;
-                palette.pathToTiles = folder;
+                palette.PathToTiles = folder;
                 palette.Initialize();
                 SavePreferences();
                 LabelPathToTiles.Content = folder;
@@ -387,7 +408,7 @@ namespace HelionEditor
     {
         public void Execute(object parameter)
         {
-            MainWindow.SaveFileAs();
+            MainWindow.Instance.SaveAs(null, null);
         }
 
         public bool CanExecute(object parameter)
@@ -402,7 +423,7 @@ namespace HelionEditor
     {
         public void Execute(object parameter)
         {
-            MainWindow.SaveFile();
+            MainWindow.Instance.SaveItem(null, null);
         }
 
         public bool CanExecute(object parameter)

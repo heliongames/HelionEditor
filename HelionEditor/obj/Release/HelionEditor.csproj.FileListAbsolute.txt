@@ -1,0 +1,26 @@
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Release\Tiles\TX Tileset Grass.png
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Release\Tiles\TX Tileset Stone Ground.png
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Release\Tiles\TX Tileset Wall.png
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Release\HelionEditor.exe.config
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Release\HelionEditor.exe
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Release\HelionEditor.pdb
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Release\Microsoft.WindowsAPICodePack.dll
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Release\Microsoft.WindowsAPICodePack.ExtendedLinguisticServices.dll
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Release\Microsoft.WindowsAPICodePack.Sensors.dll
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Release\Microsoft.WindowsAPICodePack.Shell.dll
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Release\Microsoft.WindowsAPICodePack.ShellExtensions.dll
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Release\Newtonsoft.Json.dll
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\bin\Release\Newtonsoft.Json.xml
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Release\HelionEditor.csproj.AssemblyReference.cache
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Release\MainWindow.g.cs
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Release\App.g.cs
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Release\HelionEditor_MarkupCompile.cache
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Release\HelionEditor_MarkupCompile.lref
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Release\MainWindow.baml
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Release\HelionEditor.g.resources
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Release\HelionEditor.Properties.Resources.resources
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Release\HelionEditor.csproj.GenerateResource.cache
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Release\HelionEditor.csproj.CoreCompileInputs.cache
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Release\HelionEditor.csproj.CopyComplete
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Release\HelionEditor.exe
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Release\HelionEditor.pdb

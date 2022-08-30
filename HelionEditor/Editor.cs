@@ -20,8 +20,8 @@ namespace HelionEditor
 
     class Editor
     {
+        public GameLevel Level;
         Canvas canvas;
-        public GameLevel level;
         BitmapImage emptyCell;
         TilePalette palette;
         int layer;
@@ -72,16 +72,16 @@ namespace HelionEditor
 
         public void Init(GameLevel level)
         {
-            this.level = level;
-            UpdateCanvas(level.width, level.height, level.levelLayers);
+            this.Level = level;
+            UpdateCanvas(level.Width, level.Height, level.LevelLayers);
         }
 
         public void SetSize(int width, int height)
         {
-            if (level == null || (level.width == width && level.height == height))
+            if (Level == null || (Level.Width == width && Level.Height == height))
                 return;
-            level.SetSize(width, height);
-            Init(level);
+            Level.SetSize(width, height);
+            Init(Level);
         }
 
         public void ChangeTool(Tool tool)
@@ -91,7 +91,7 @@ namespace HelionEditor
 
         public void UpdateTile(int X, int Y)
         {
-            if (X >= 0 && Y >= 0 && X < level.width && Y < level.height && level != null)
+            if (X >= 0 && Y >= 0 && X < Level.Width && Y < Level.Height && Level != null)
                 switch (tool)
                 {
                     case Tool.Brush:
@@ -108,24 +108,24 @@ namespace HelionEditor
 
         void UseBrush(int X, int Y)
         {
-            if (palette.selectedID >= 0 && level.SetTile(layer, X, Y, palette.selectedID))
-                ((System.Windows.Controls.Image)canvas.Children[layer * level.width * level.height + Y * level.width + X]).Source = palette.tiles[level.levelLayers[layer].cells[X, Y]];
+            if (palette.SelectedID >= 0 && Level.SetTile(layer, X, Y, palette.SelectedID))
+                ((System.Windows.Controls.Image)canvas.Children[layer * Level.Width * Level.Height + Y * Level.Width + X]).Source = palette.Tiles[Level.LevelLayers[layer].cells[X, Y]];
         }
 
         void UseErase(int X, int Y)
         {
-            level.SetTile(layer, X, Y, -1);
+            Level.SetTile(layer, X, Y, -1);
             if (layer == 0)
-                ((System.Windows.Controls.Image)canvas.Children[layer * level.width * level.height + Y * level.width + X]).Source = emptyCell;
+                ((System.Windows.Controls.Image)canvas.Children[layer * Level.Width * Level.Height + Y * Level.Width + X]).Source = emptyCell;
             else
-                ((System.Windows.Controls.Image)canvas.Children[layer * level.width * level.height + Y * level.width + X]).Source = null;
+                ((System.Windows.Controls.Image)canvas.Children[layer * Level.Width * Level.Height + Y * Level.Width + X]).Source = null;
         }
 
         void UseBucket(int X, int Y)
         {
-            int touchedID = level.levelLayers[layer].cells[X, Y];
+            int touchedID = Level.LevelLayers[layer].cells[X, Y];
             Queue<System.Drawing.Point> checkList = new Queue<System.Drawing.Point>();
-            bool[,] checkedList = new bool[level.width, level.height];
+            bool[,] checkedList = new bool[Level.Width, Level.Height];
             UseBrush(X, Y);
 
             foreach (var neighbor in GetNeighbors(X, Y))
@@ -136,7 +136,7 @@ namespace HelionEditor
             {
                 var neighbor = checkList.Dequeue();
                 checkedList[neighbor.X, neighbor.Y] = true;
-                if (level.levelLayers[layer].cells[neighbor.X,neighbor.Y] == touchedID)
+                if (Level.LevelLayers[layer].cells[neighbor.X,neighbor.Y] == touchedID)
                 {
                     UseBrush(neighbor.X, neighbor.Y);
                     foreach (var nbr in GetNeighbors(neighbor.X, neighbor.Y))
@@ -152,9 +152,9 @@ namespace HelionEditor
 
         public void ClearLayer()
         {
-            for (int x = 0; x < level.width; x++)
+            for (int x = 0; x < Level.Width; x++)
             {
-                for (int y = 0; y < level.height; y++)
+                for (int y = 0; y < Level.Height; y++)
                 {
                     UseErase(x, y);
                 }
@@ -168,9 +168,9 @@ namespace HelionEditor
                 neighbors.Add(new System.Drawing.Point(X - 1, Y));
             if (Y > 0)
                 neighbors.Add(new System.Drawing.Point(X, Y - 1));
-            if (X < level.width-1)
+            if (X < Level.Width-1)
                 neighbors.Add(new System.Drawing.Point(X + 1, Y));
-            if (Y < level.height-1)
+            if (Y < Level.Height-1)
                 neighbors.Add(new System.Drawing.Point(X, Y + 1));
             return neighbors;
         } 
@@ -191,10 +191,10 @@ namespace HelionEditor
                         int id = data[l].cells[x, y];
                         if (l == 0)
                         {
-                            image.Source = id == -1 ? emptyCell : palette.tiles[id];
+                            image.Source = id == -1 ? emptyCell : palette.Tiles[id];
                         } 
                         else if (id != -1)
-                            image.Source = palette.tiles[id];
+                            image.Source = palette.Tiles[id];
                         image.Margin = new Thickness(currentID % width * 32, currentID / width * 32, 0, 0);
                         canvas.Children.Add(image);
                         currentID++;
@@ -208,8 +208,8 @@ namespace HelionEditor
 
         public int GetTile(int X, int Y)
         {
-            if (X >= 0 && Y >= 0 && X < level.width && Y < level.height && level != null)
-                return level.levelLayers[layer].cells[X, Y];
+            if (X >= 0 && Y >= 0 && X < Level.Width && Y < Level.Height && Level != null)
+                return Level.LevelLayers[layer].cells[X, Y];
             else
                 return -1;
         }

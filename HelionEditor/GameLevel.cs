@@ -11,18 +11,18 @@ namespace HelionEditor
     [Serializable]
     class GameLevel
     {
-        public LevelLayer[] levelLayers;
-        public int width;
-        public int height;
+        public LevelLayer[] LevelLayers;
+        public int Width;
+        public int Height;
 
         public GameLevel(int width, int height)
         {
-            this.width = width;
-            this.height = height;
-            levelLayers = new LevelLayer[5];
-            for (int i = 0; i < levelLayers.Length; i++)
+            this.Width = width;
+            this.Height = height;
+            LevelLayers = new LevelLayer[5];
+            for (int i = 0; i < LevelLayers.Length; i++)
             {
-                levelLayers[i] = new LevelLayer(width, height);
+                LevelLayers[i] = new LevelLayer(width, height);
             }
         }
 
@@ -32,24 +32,24 @@ namespace HelionEditor
             for (int i = 0; i < 5; i++)
             {
                 newLevelLayers[i] = new LevelLayer(width, height);
-                for (int x = 0; x < Math.Min(width,this.width); x++)
+                for (int x = 0; x < Math.Min(width,this.Width); x++)
                 {
-                    for (int y = 0; y < Math.Min(height, this.height); y++)
+                    for (int y = 0; y < Math.Min(height, this.Height); y++)
                     {
-                        newLevelLayers[i].cells[x, y] = levelLayers[i].cells[x, y];
+                        newLevelLayers[i].cells[x, y] = LevelLayers[i].cells[x, y];
                     }
                 }
             }
-            levelLayers = newLevelLayers;
-            this.width = width;
-            this.height = height;
+            LevelLayers = newLevelLayers;
+            this.Width = width;
+            this.Height = height;
         }
 
         public bool SetTile(int layer, int X, int Y, int ID)
         {
-            if (levelLayers[layer].cells[X, Y] != ID)
+            if (LevelLayers[layer].cells[X, Y] != ID)
             {
-                levelLayers[layer].cells[X, Y] = ID;
+                LevelLayers[layer].cells[X, Y] = ID;
                 return true;
             }
             return false;

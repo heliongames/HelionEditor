@@ -4,11 +4,11 @@
 winexe
 C#
 .cs
-C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Debug\
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Release\
 HelionEditor
 none
 false
-DEBUG;TRACE
+TRACE
 C:\Users\Root\source\repos\HelionEditor\HelionEditor\App.xaml
 11151548125
 

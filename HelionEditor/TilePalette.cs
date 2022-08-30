@@ -15,10 +15,10 @@ namespace HelionEditor
     {
         Canvas canvas;
         System.Windows.Controls.Image selectedImage;
-        public string pathToTiles;
-        public List<BitmapImage> tiles = new List<BitmapImage>();
+        public string PathToTiles;
+        public List<BitmapImage> Tiles = new List<BitmapImage>();
 
-        public int selectedID = -1;
+        public int SelectedID = -1;
 
         System.Windows.Media.SolidColorBrush frameColor = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(200, 200, 200));
         System.Windows.Media.SolidColorBrush selectedFrameColor = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(20, 220, 20));
@@ -27,7 +27,7 @@ namespace HelionEditor
         {
             this.canvas = canvas;
             this.selectedImage = selectedImage;
-            this.pathToTiles = pathToTiles;
+            this.PathToTiles = pathToTiles;
             canvas.MouseDown += Canvas_MouseDown;
         }
 
@@ -37,22 +37,22 @@ namespace HelionEditor
             int tileX = (int)(mousePosition.X - 3) / 36;
             int tileY = (int)(mousePosition.Y - 3) / 36;
             int tileID = tileY * 5 + tileX;
-            if (selectedID != -1)
+            if (SelectedID != -1)
             {
-                ((Canvas)canvas.Children[selectedID]).Background = frameColor;
+                ((Canvas)canvas.Children[SelectedID]).Background = frameColor;
             }
             ((Canvas)canvas.Children[tileID]).Background = selectedFrameColor;
-            selectedID = tileID;
-            selectedImage.Source = tiles[tileID];
+            SelectedID = tileID;
+            selectedImage.Source = Tiles[tileID];
         }
 
         public TilePalette Initialize()
         {
-            if (Directory.Exists(pathToTiles))
+            if (Directory.Exists(PathToTiles))
             {
                 int currentID = 0;
-                string[] tilesets = Directory.GetFiles(pathToTiles);
-                tiles.Clear();
+                string[] tilesets = Directory.GetFiles(PathToTiles);
+                Tiles.Clear();
                 canvas.Children.Clear();
                 for (int i = 0; i < tilesets.Length; i++)
                 {
@@ -84,7 +84,7 @@ namespace HelionEditor
                                     bi.CacheOption = BitmapCacheOption.OnLoad;
                                     bi.StreamSource = ms;
                                     bi.EndInit();
-                                    tiles.Add(bi);
+                                    Tiles.Add(bi);
 
                                     Canvas frameImage = new Canvas();
                                     frameImage.Width = frameImage.Height = 34;
