@@ -68,3 +68,4 @@ D:\Projects\С#\HelionEditor\HelionEditor\bin\Debug\Microsoft.WindowsAPICodePack
 D:\Projects\С#\HelionEditor\HelionEditor\bin\Debug\Microsoft.WindowsAPICodePack.Sensors.dll
 D:\Projects\С#\HelionEditor\HelionEditor\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
 D:\Projects\С#\HelionEditor\HelionEditor\bin\Debug\Microsoft.WindowsAPICodePack.ShellExtensions.dll
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Debug\HelionEditor.csproj.SuggestedBindingRedirects.cache

@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Diagnostics;
 
 namespace HelionEditor
 {
@@ -66,21 +67,24 @@ namespace HelionEditor
 
             GridPreferences.Visibility = Visibility.Collapsed;
             string pathToPreferencesData = AppDomain.CurrentDomain.BaseDirectory + "pref.json";
+
+            var preferencesData = new PreferencesData(0, 0, 0, 0, null, null);
+            
             if (File.Exists(pathToPreferencesData))
             {
-                var preferencesData = Newtonsoft.Json.JsonConvert.DeserializeObject<PreferencesData>(File.ReadAllText(pathToPreferencesData));
-                recentFiles = preferencesData.RecentFiles != null ? preferencesData.RecentFiles : new List<string>();
-                if (preferencesData.PathToTiles == null)
-                    preferencesData.PathToTiles = AppDomain.CurrentDomain.BaseDirectory + "Tiles";
-                palette = new TilePalette(CanvasPalette, ImageSelectedTile, preferencesData.PathToTiles).Initialize();
-                editor = new Editor(CanvasLevel, palette, SliderLayerSelector, LayersCounter);
-                LabelPathToTiles.Content = preferencesData.PathToTiles;
-                InitializeRecentFiles();
-                Top = top != 0 ? top : preferencesData.Top;
-                Left = left != 0 ? left : preferencesData.Left;
-                Width = width != 0 ? width : preferencesData.Width;
-                Height = height != 0 ? height : preferencesData.Height;
+                preferencesData = Newtonsoft.Json.JsonConvert.DeserializeObject<PreferencesData>(File.ReadAllText(pathToPreferencesData));
             }
+            recentFiles = preferencesData.RecentFiles != null ? preferencesData.RecentFiles : new List<string>();
+            if (preferencesData.PathToTiles == null)
+                preferencesData.PathToTiles = AppDomain.CurrentDomain.BaseDirectory + "Tiles";
+            palette = new TilePalette(CanvasPalette, ImageSelectedTile, preferencesData.PathToTiles).Initialize();
+            editor = new Editor(CanvasLevel, palette, SliderLayerSelector, LayersCounter);
+            LabelPathToTiles.Content = preferencesData.PathToTiles;
+            InitializeRecentFiles();
+            Top = top != 0 ? top : preferencesData.Top;
+            Left = left != 0 ? left : preferencesData.Left;
+            Width = width != 0 ? width : preferencesData.Width;
+            Height = height != 0 ? height : preferencesData.Height;
         }
 
         private void InitializeRecentFiles()
@@ -97,11 +101,28 @@ namespace HelionEditor
                 {
                     FilePath = ((MenuItem)sender).Header.ToString();
                     FileName = System.IO.Path.GetFileNameWithoutExtension(FilePath);
-                    byte[] data = File.ReadAllBytes(FilePath);
-                    editor.Init(GameLevel.FromByteArray(data));
-                    recentFiles.Add(FilePath);
-                    Instance.InitializeRecentFiles();
-                    Instance.SavePreferences();
+                    if(File.Exists(FilePath))
+                    {
+                        byte[] data = File.ReadAllBytes(FilePath);
+                        editor.Init(GameLevel.FromByteArray(data));
+                        recentFiles.Add(FilePath);
+                        Instance.InitializeRecentFiles();
+                        Instance.SavePreferences();
+                    } 
+                    else
+                    {
+                        foreach (var fileItem in recentFiles)
+                        {
+
+                            if(fileItem == FilePath)
+                            {
+                                recentFiles.Remove(fileItem);
+                                MenuItemRecentFiles.Items.Remove(sender);
+                                break;
+                            }
+                        }
+                        MessageBox.Show("File not found", "ERROR");
+                    }
                 };
                 MenuItemRecentFiles.Items.Add(item);
             }

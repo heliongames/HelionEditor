@@ -24,3 +24,4 @@ C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Release\HelionEditor.cs
 C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Release\HelionEditor.csproj.CopyComplete
 C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Release\HelionEditor.exe
 C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Release\HelionEditor.pdb
+C:\Users\Root\source\repos\HelionEditor\HelionEditor\obj\Release\HelionEditor.csproj.SuggestedBindingRedirects.cache
